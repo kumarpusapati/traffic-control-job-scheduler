@@ -1,115 +1,33 @@
-/* ── SETUP SCREEN ── */
-#setupScreen{
-  display:block;
-  min-height:100vh;
-  background:#1a1d23;
-  padding:0;
-  margin:0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VR Safety Services – Job Scheduler</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#f0f2f5;--surface:#fff;--border:#e2e6ea;--text:#1a1d23;--muted:#7a8390;
+  --accent:#3a6bff;--accent-soft:#eef1ff;--break-bg:#4ade80;--break-text:#14532d;
+  --shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px;
 }
-.setup-inner{
-  max-width:480px;
-  margin:0 auto;
-  padding:32px 20px 60px;
-}
-.setup-logo{
-  font-family:'Syne',sans-serif;
-  font-weight:800;
-  font-size:20px;
-  color:#fff;
-  margin-bottom:32px;
-  letter-spacing:-.3px;
-}
-.setup-logo span{color:var(--accent);}
-.setup-title{
-  font-family:'Syne',sans-serif;
-  font-weight:800;
-  font-size:26px;
-  color:#fff;
-  margin-bottom:8px;
-  line-height:1.2;
-}
-.setup-sub{
-  font-size:14px;
-  color:rgba(255,255,255,.5);
-  margin-bottom:32px;
-  line-height:1.5;
-}
-.setup-label{
-  display:block;
-  font-size:11px;
-  font-weight:700;
-  color:rgba(255,255,255,.5);
-  letter-spacing:.8px;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-.setup-field{
-  width:100%;
-  background:rgba(255,255,255,.08);
-  border:1.5px solid rgba(255,255,255,.15);
-  border-radius:12px;
-  padding:14px 16px;
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
-  color:#fff;
-  outline:none;
-  margin-bottom:20px;
-  -webkit-appearance:none;
-  transition:border-color .15s;
-}
-.setup-field:focus{border-color:var(--accent);background:rgba(58,107,255,.15);}
-.setup-field::placeholder{color:rgba(255,255,255,.25);}
-.setup-btn{
-  display:block;
-  width:100%;
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  border-radius:12px;
-  padding:16px;
-  font-family:'Syne',sans-serif;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:8px;
-  margin-bottom:28px;
-  -webkit-appearance:none;
-  letter-spacing:-.2px;
-}
-.setup-btn:active{opacity:.85;}
-.setup-err{
-  background:#7f1d1d;
-  border:1px solid #ef4444;
-  color:#fca5a5;
-  border-radius:10px;
-  padding:12px 14px;
-  font-size:13px;
-  font-weight:500;
-  margin-bottom:16px;
-}
-.setup-help-toggle{
-  background:none;
-  border:none;
-  color:rgba(255,255,255,.4);
-  font-family:'DM Sans',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  padding:0;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  width:100%;
-  text-align:left;
-  margin-bottom:4px;
-}
-.setup-help-toggle:active{color:rgba(255,255,255,.7);}
-.setup-steps{display:none;margin-top:16px;}
-.setup-step-row{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
-.setup-step-num{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
-.setup-step-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5;padding-top:3px;}
-.setup-step-text strong{color:rgba(255,255,255,.8);display:block;margin-bottom:2px;font-weight:700;}
-.setup-code{background:rgba(0,0,0,.4);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:10px;color:rgba(255,255,255,.6);line-height:1.6;margin-top:8px;white-space:pre;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── TOP NAV ── */
+.app-nav{background:var(--text);color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.25);height:56px;gap:12px;}
+.app-nav h1{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.3px;white-space:nowrap;}
+.app-nav h1 span{color:var(--accent);}
+.nav-tabs{display:flex;gap:4px;}
+.nav-tab{background:none;border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .15s;}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,.1);}
+.nav-tab.active{color:#fff;background:var(--accent);}
+.nav-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.btn-nav{background:rgba(255,255,255,.12);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.btn-nav:hover{background:rgba(255,255,255,.22);}
+.btn-add{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.btn-add:hover{opacity:.88;}
 
 /* ── VIEWS ── */
 .view{display:none;}.view.active{display:block;}
@@ -147,6 +65,7 @@
 .job-card{border-radius:7px;padding:5px 7px;margin-bottom:3px;position:relative;cursor:grab;border-left:4px solid #ccc;background:#fff;transition:box-shadow .15s,opacity .2s;}
 .job-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.13);}
 .job-card.dragging{opacity:.35;cursor:grabbing;}
+/* status backgrounds */
 .job-card.s-received{background:#fefce8;border-left-color:#ca8a04;}
 .job-card.s-changed{background:#f5f3ff;border-left-color:#7c3aed;}
 .job-card.s-scheduled{background:#eff6ff;border-left-color:#2563eb;}
@@ -162,7 +81,7 @@
 .d-slot:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.15);}
 .v-slot{border-radius:4px;font-size:9px;font-weight:600;padding:2px 5px;cursor:pointer;border:1.5px dashed #aaa;background:#f8f8f8;color:var(--muted);transition:all .15s;white-space:nowrap;max-width:80px;overflow:hidden;text-overflow:ellipsis;}
 .v-slot.assigned{border-style:solid;border-color:#6366f1;background:#eef2ff;color:#3730a3;}
-.v-slot:hover{transform:translateY(-1px);}
+.v-slot:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.1);}
 .card-actions{display:flex;gap:3px;justify-content:flex-end;margin-top:2px;}
 .btn-ic{background:none;border:none;cursor:pointer;font-size:11px;padding:2px 3px;border-radius:3px;opacity:.45;transition:opacity .15s,background .15s;}
 .btn-ic:hover{opacity:1;background:rgba(0,0,0,.07);}
@@ -172,13 +91,6 @@
 .status-badge{font-size:9px;font-weight:800;padding:1px 5px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-bottom:2px;}
 .warn-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#f59e0b;margin-left:2px;vertical-align:middle;}
 .tag{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;background:#eef1ff;color:var(--accent);margin-right:2px;margin-bottom:1px;}
-
-/* ── SAVING TOAST ── */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(60px);opacity:0;transition:all .25s;display:flex;align-items:center;gap:8px;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.success{background:#16a34a;}
-.toast.error{background:#dc2626;}
-.toast.info{background:#2563eb;}
 
 /* ── MODALS ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);animation:fadeIn .15s ease;}
@@ -209,6 +121,7 @@ input[type=color]{width:30px;height:26px;padding:1px 2px;cursor:pointer;border-r
 .extra-item{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--bg);border-radius:7px;border:1.5px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;transition:border-color .15s,background .15s;user-select:none;}
 .extra-item input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;}
 .extra-item:has(input:checked){border-color:var(--accent);background:var(--accent-soft);}
+/* driver grid */
 .driver-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0;}
 .d-opt{border-radius:8px;padding:9px 7px;text-align:center;cursor:pointer;font-size:11px;font-weight:700;color:#fff;transition:transform .12s,box-shadow .12s;border:3px solid transparent;}
 .d-opt:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.2);}
@@ -219,14 +132,17 @@ input[type=color]{width:30px;height:26px;padding:1px 2px;cursor:pointer;border-r
 .consec-1{background:#f59e0b;color:#fff;}
 .consec-2{background:#ea580c;color:#fff;}
 .consec-3{background:#dc2626;color:#fff;}
+/* vehicle pick */
 .vpick-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0;}
 .vpick-item{border-radius:8px;padding:9px 11px;cursor:pointer;font-size:12px;font-weight:700;border:2px solid var(--border);background:var(--bg);transition:all .15s;display:flex;align-items:center;gap:8px;}
 .vpick-item:hover{border-color:var(--accent);background:var(--accent-soft);}
 .vpick-item.selected{border-color:#6366f1;background:#eef2ff;}
+/* status grid */
 .status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
 .s-opt{border-radius:8px;padding:11px;cursor:pointer;font-size:13px;font-weight:700;border:2px solid transparent;transition:all .15s;text-align:center;}
 .s-opt:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12);}
 .s-opt.selected{border-color:#1a1d23!important;transform:scale(1.03);}
+/* vtypebadge */
 .vtbadge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:#e0e7ff;color:#3730a3;}
 
 /* ── SUMMARY ── */
@@ -250,69 +166,7 @@ input[type=color]{width:30px;height:26px;padding:1px 2px;cursor:pointer;border-r
 </head>
 <body>
 
-<!-- ══ SETUP SCREEN ══ -->
-<div id="setupScreen" class="hidden">
-  <div class="setup-inner">
-    <div class="setup-logo">VR <span>Safety</span> Services</div>
-    <div class="setup-title">Connect to<br>Supabase</div>
-    <div class="setup-sub">Enter your project credentials once — saved to this device forever.</div>
-
-    <div id="setupError" class="setup-err hidden"></div>
-
-    <label class="setup-label" for="setupUrl">Project URL</label>
-    <input class="setup-field" type="url" id="setupUrl"
-      placeholder="https://xxxx.supabase.co"
-      autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
-      inputmode="url">
-
-    <label class="setup-label" for="setupKey">Anon / Public Key</label>
-    <input class="setup-field" type="text" id="setupKey"
-      placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."
-      autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-
-    <button class="setup-btn" onclick="connectSupabase()">Connect &amp; Launch →</button>
-
-    <button class="setup-help-toggle" onclick="toggleSetupHelp()">
-      <span id="setupHelpArrow">▶</span> How to get these credentials
-    </button>
-    <div class="setup-steps" id="setupHelp">
-      <div class="setup-step-row">
-        <div class="setup-step-num">1</div>
-        <div class="setup-step-text"><strong>Go to supabase.com → New Project</strong>Sign up free, create a project named vr-scheduler. Wait ~2 min.</div>
-      </div>
-      <div class="setup-step-row">
-        <div class="setup-step-num">2</div>
-        <div class="setup-step-text">
-          <strong>SQL Editor → paste &amp; run this</strong>
-          <div class="setup-code">create table jobs (
-  id text primary key,
-  data jsonb not null,
-  updated_at timestamptz default now()
-);
-create table config (
-  key text primary key,
-  data jsonb not null,
-  updated_at timestamptz default now()
-);
-alter table jobs enable row level security;
-alter table config enable row level security;
-create policy "Allow all" on jobs
-  for all using (true) with check (true);
-create policy "Allow all" on config
-  for all using (true) with check (true);</div>
-        </div>
-      </div>
-      <div class="setup-step-row">
-        <div class="setup-step-num">3</div>
-        <div class="setup-step-text"><strong>Settings → API</strong>Copy the Project URL and anon/public key into the fields above.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="mainApp" class="hidden">
-
-<!-- NAV -->
+<!-- ══ NAV ══ -->
 <div class="app-nav">
   <h1>VR <span>Safety</span> Services</h1>
   <div class="nav-tabs">
@@ -320,10 +174,6 @@ create policy "Allow all" on config
     <button class="nav-tab" onclick="switchView('summary')">📊 Summary</button>
   </div>
   <div class="nav-actions">
-    <div class="sync-pill" id="syncPill" onclick="openManageConn()" title="Click to manage connection">
-      <div class="sync-dot pending" id="syncDot"></div>
-      <span id="syncLabel">Connecting…</span>
-    </div>
     <button class="btn-nav" onclick="openManageClients()">🏢 Clients</button>
     <button class="btn-nav" onclick="openManageVehicles()">🚛 Vehicles</button>
     <button class="btn-nav" onclick="openManageDrivers()">👷 Drivers</button>
@@ -331,7 +181,7 @@ create policy "Allow all" on config
   </div>
 </div>
 
-<!-- SCHEDULE VIEW -->
+<!-- ══ SCHEDULE VIEW ══ -->
 <div id="view-schedule" class="view active">
   <div class="toolbar">
     <div class="week-nav">
@@ -358,7 +208,7 @@ create policy "Allow all" on config
   </div>
 </div>
 
-<!-- SUMMARY VIEW -->
+<!-- ══ SUMMARY VIEW ══ -->
 <div id="view-summary" class="view">
   <div class="summary-wrap">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
@@ -367,6 +217,7 @@ create policy "Allow all" on config
         <p style="font-size:12px;color:var(--muted);margin-top:2px;">Aggregated metrics across all jobs</p>
       </div>
       <div class="sum-filter">
+        <label style="text-transform:none;font-size:12px;color:var(--muted);">Filter by:</label>
         <select id="sumYear" onchange="renderSummary()"><option value="">All Time</option></select>
         <select id="sumMonth" onchange="renderSummary()"><option value="">All Months</option></select>
       </div>
@@ -375,11 +226,6 @@ create policy "Allow all" on config
     <div class="summary-grid" id="summaryGrid"></div>
   </div>
 </div>
-
-</div><!-- end mainApp -->
-
-<!-- ══ TOAST ══ -->
-<div class="toast" id="toast"></div>
 
 <!-- ══════════ MODALS ══════════ -->
 
@@ -443,7 +289,7 @@ create policy "Allow all" on config
   </div>
 </div>
 
-<!-- Status -->
+<!-- Status Change -->
 <div class="modal-overlay hidden" id="statusModal">
   <div class="modal" style="max-width:380px;">
     <h2>Change Status</h2>
@@ -527,30 +373,36 @@ create policy "Allow all" on config
   </div>
 </div>
 
-<!-- Connection Manager -->
-<div class="modal-overlay hidden" id="connModal">
-  <div class="modal" style="max-width:420px;">
-    <h2>⚡ Connection Settings</h2>
-    <div id="connStatus" style="margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
-    <div class="fg"><label>Supabase URL</label><input type="text" id="connUrl" style="font-size:12px;"></div>
-    <div class="fg"><label>Anon Key</label><input type="text" id="connKey" style="font-size:12px;word-break:break-all;"></div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeManageConn()">Cancel</button>
-      <button class="btn-primary" onclick="reconnect()">Reconnect</button>
-      <button class="btn-ghost" style="color:#dc2626;border-color:#dc2626;" onclick="resetConn()">Reset</button>
-    </div>
-  </div>
-</div>
-
 <script>
-// ══════════════════════════════════════════════════
-// CONSTANTS
-// ══════════════════════════════════════════════════
-const TIME_SLOTS=['09:00','09:30','10:30','11:00','12:00','BREAK','13:30','14:00','15:00','15:30','16:00'];
-const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const VICONS={tma:'🚛',pickup:'🛻',van:'🚐',other:'🚗'};
-const STATUSES=[
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let weekOffset = 0;
+let jobs     = load('vrs_jobs', []);
+let drivers  = load('vrs_drivers', [
+  {id:'d1',name:'Luis Torr',color:'#6366f1'},{id:'d2',name:'Carlos',color:'#f97316'},
+  {id:'d3',name:'Roby',color:'#ec4899'},{id:'d4',name:'Elam',color:'#1a1d23'},
+  {id:'d5',name:'Choudary',color:'#eab308'},{id:'d6',name:'Kevin',color:'#14b8a6'},
+  {id:'d7',name:'Josue',color:'#8b5cf6'},{id:'d8',name:'Luis Esc',color:'#3b82f6'},
+  {id:'d9',name:'Gerber',color:'#22c55e'},{id:'d10',name:'Jared',color:'#ef4444'},
+]);
+let clients  = load('vrs_clients', [
+  {id:'c1',name:'Hend',contact:''},{id:'c2',name:'NoVA',contact:''},
+  {id:'c3',name:'Marcus',contact:''},{id:'c4',name:'Rivera',contact:''},
+]);
+let vehicles = load('vrs_vehicles', [
+  {id:'v1',name:'TMA-01',type:'tma',notes:'2022 Black'},{id:'v2',name:'TMA-02',type:'tma',notes:'2021 White'},
+  {id:'v3',name:'TMA-03',type:'tma',notes:'2023 Yellow'},{id:'v4',name:'PU-01',type:'pickup',notes:'F-150 Red'},
+  {id:'v5',name:'PU-02',type:'pickup',notes:'F-250 Blue'},{id:'v6',name:'VAN-01',type:'van',notes:'Transit White'},
+]);
+
+let editJobId = null, dPickCtx = null, vPickCtx = null, statusJobId = null;
+
+const TIME_SLOTS = ['09:00','09:30','10:30','11:00','12:00','BREAK','13:30','14:00','15:00','15:30','16:00'];
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const VICONS = {tma:'🚛',pickup:'🛻',van:'🚐',other:'🚗'};
+const STATUSES = [
   {k:'received', label:'📨 Received',   bg:'#fefce8',border:'#ca8a04',tc:'#713f12'},
   {k:'changed',  label:'🔄 Changed',    bg:'#f5f3ff',border:'#7c3aed',tc:'#3b0764'},
   {k:'scheduled',label:'📋 Scheduled',  bg:'#eff6ff',border:'#2563eb',tc:'#1e3a8a'},
@@ -559,269 +411,28 @@ const STATUSES=[
   {k:'cancelled',label:'❌ Cancelled',  bg:'#fef2f2',border:'#dc2626',tc:'#7f1d1d'},
 ];
 
-// ══════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════
-let sb = null; // supabase client
-let realtimeSub = null;
-let weekOffset=0;
-let jobs=[], drivers=[], clients=[], vehicles=[];
-let editJobId=null, dPickCtx=null, vPickCtx=null, statusJobId=null;
-let isSynced=false;
-
-// Default seed data
-const DEFAULT_DRIVERS=[
-  {id:'d1',name:'Luis Torr',color:'#6366f1'},{id:'d2',name:'Carlos',color:'#f97316'},
-  {id:'d3',name:'Roby',color:'#ec4899'},{id:'d4',name:'Elam',color:'#1a1d23'},
-  {id:'d5',name:'Choudary',color:'#eab308'},{id:'d6',name:'Kevin',color:'#14b8a6'},
-  {id:'d7',name:'Josue',color:'#8b5cf6'},{id:'d8',name:'Luis Esc',color:'#3b82f6'},
-  {id:'d9',name:'Gerber',color:'#22c55e'},{id:'d10',name:'Jared',color:'#ef4444'},
-];
-const DEFAULT_CLIENTS=[
-  {id:'c1',name:'Hend',contact:''},{id:'c2',name:'NoVA',contact:''},
-  {id:'c3',name:'Marcus',contact:''},{id:'c4',name:'Rivera',contact:''},
-];
-const DEFAULT_VEHICLES=[
-  {id:'v1',name:'TMA-01',type:'tma',notes:'2022 Black'},{id:'v2',name:'TMA-02',type:'tma',notes:'2021 White'},
-  {id:'v3',name:'TMA-03',type:'tma',notes:'2023 Yellow'},{id:'v4',name:'PU-01',type:'pickup',notes:'F-150 Red'},
-  {id:'v5',name:'PU-02',type:'pickup',notes:'F-250 Blue'},{id:'v6',name:'VAN-01',type:'van',notes:'Transit White'},
-];
-
-// ══════════════════════════════════════════════════
-// LOCAL STORAGE HELPERS (offline cache)
-// ══════════════════════════════════════════════════
-function lsGet(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-
-// ══════════════════════════════════════════════════
-// INIT — check for saved credentials
-// ══════════════════════════════════════════════════
-(function init(){
-  const url=lsGet('vrs_sb_url','');
-  const key=lsGet('vrs_sb_key','');
-  if(url&&key){
-    document.getElementById('mainApp').classList.remove('hidden');
-    // Load from local cache immediately so UI isn't blank
-    jobs=lsGet('vrs_jobs',[]);
-    drivers=lsGet('vrs_drivers',DEFAULT_DRIVERS);
-    clients=lsGet('vrs_clients',DEFAULT_CLIENTS);
-    vehicles=lsGet('vrs_vehicles',DEFAULT_VEHICLES);
-    render();
-    initSupabase(url,key);
-  } else {
-    document.getElementById('setupScreen').classList.remove('hidden');
-  }
-})();
-
-// ══════════════════════════════════════════════════
-// SUPABASE INIT & REALTIME
-// ══════════════════════════════════════════════════
-function toggleSetupHelp(){
-  const el=document.getElementById('setupHelp');
-  const arrow=document.getElementById('setupHelpArrow');
-  const isHidden=el.style.display===''||el.style.display==='none';
-  el.style.display=isHidden?'block':'none';
-  arrow.textContent=isHidden?'▼':'▶';
+function load(key, def){ try{const v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;} }
+function save(){
+  localStorage.setItem('vrs_jobs',JSON.stringify(jobs));
+  localStorage.setItem('vrs_drivers',JSON.stringify(drivers));
+  localStorage.setItem('vrs_clients',JSON.stringify(clients));
+  localStorage.setItem('vrs_vehicles',JSON.stringify(vehicles));
 }
 
-async function connectSupabase(){
-  const url=document.getElementById('setupUrl').value.trim();
-  const key=document.getElementById('setupKey').value.trim();
-  const errEl=document.getElementById('setupError');
-  errEl.classList.add('hidden');
-  if(!url||!key){errEl.textContent='Please enter both the URL and key.';errEl.classList.remove('hidden');return;}
-  if(!url.startsWith('https://')){errEl.textContent='URL must start with https://';errEl.classList.remove('hidden');return;}
-
-  lsSet('vrs_sb_url',url); lsSet('vrs_sb_key',key);
-  document.getElementById('setupScreen').classList.add('hidden');
-  document.getElementById('mainApp').classList.remove('hidden');
-  jobs=lsGet('vrs_jobs',[]); drivers=lsGet('vrs_drivers',DEFAULT_DRIVERS);
-  clients=lsGet('vrs_clients',DEFAULT_CLIENTS); vehicles=lsGet('vrs_vehicles',DEFAULT_VEHICLES);
-  render();
-  await initSupabase(url,key);
-}
-
-async function initSupabase(url,key){
-  setSyncStatus('pending','Connecting…');
-  try{
-    sb = supabase.createClient(url,key);
-    await loadFromSupabase();
-    subscribeRealtime();
-    setSyncStatus('ok','Live ✓');
-    isSynced=true;
-  } catch(e){
-    console.error('Supabase init error',e);
-    setSyncStatus('err','Offline — local only');
-    showToast('Could not connect to Supabase. Working offline.','error');
-  }
-}
-
-async function loadFromSupabase(){
-  // Load config (drivers, clients, vehicles)
-  const {data:configRows,error:ce}=await sb.from('config').select('*');
-  if(ce) throw ce;
-  const cfgMap={};
-  (configRows||[]).forEach(r=>cfgMap[r.key]=r.data);
-
-  if(cfgMap.drivers) drivers=cfgMap.drivers;
-  else await pushConfig('drivers',DEFAULT_DRIVERS).then(()=>drivers=DEFAULT_DRIVERS);
-
-  if(cfgMap.clients) clients=cfgMap.clients;
-  else await pushConfig('clients',DEFAULT_CLIENTS).then(()=>clients=DEFAULT_CLIENTS);
-
-  if(cfgMap.vehicles) vehicles=cfgMap.vehicles;
-  else await pushConfig('vehicles',DEFAULT_VEHICLES).then(()=>vehicles=DEFAULT_VEHICLES);
-
-  // Load jobs
-  const {data:jobRows,error:je}=await sb.from('jobs').select('*');
-  if(je) throw je;
-  jobs=(jobRows||[]).map(r=>r.data);
-
-  // Cache locally
-  lsSet('vrs_jobs',jobs); lsSet('vrs_drivers',drivers);
-  lsSet('vrs_clients',clients); lsSet('vrs_vehicles',vehicles);
-  render();
-}
-
-function subscribeRealtime(){
-  if(realtimeSub){sb.removeChannel(realtimeSub);}
-  realtimeSub=sb.channel('db-changes')
-    .on('postgres_changes',{event:'*',schema:'public',table:'jobs'},handleJobChange)
-    .on('postgres_changes',{event:'*',schema:'public',table:'config'},handleConfigChange)
-    .subscribe(status=>{
-      if(status==='SUBSCRIBED'){setSyncStatus('ok','Live ✓');}
-      else if(status==='CLOSED'||status==='CHANNEL_ERROR'){setSyncStatus('err','Disconnected');}
-    });
-}
-
-function handleJobChange(payload){
-  const {eventType,new:row,old}=payload;
-  if(eventType==='INSERT'||eventType==='UPDATE'){
-    const j=row.data;
-    const idx=jobs.findIndex(x=>x.id===j.id);
-    if(idx>=0) jobs[idx]=j; else jobs.push(j);
-  } else if(eventType==='DELETE'){
-    jobs=jobs.filter(j=>j.id!==old.id);
-  }
-  lsSet('vrs_jobs',jobs);
-  render();
-  showToast('Schedule updated by another user','info',2500);
-}
-
-function handleConfigChange(payload){
-  const {eventType,new:row}=payload;
-  if(eventType==='INSERT'||eventType==='UPDATE'){
-    if(row.key==='drivers'){drivers=row.data;lsSet('vrs_drivers',drivers);}
-    if(row.key==='clients'){clients=row.data;lsSet('vrs_clients',clients);}
-    if(row.key==='vehicles'){vehicles=row.data;lsSet('vrs_vehicles',vehicles);}
-    render();
-  }
-}
-
-// ══════════════════════════════════════════════════
-// SYNC HELPERS
-// ══════════════════════════════════════════════════
-async function pushJob(job){
-  lsSet('vrs_jobs',jobs); // always update local cache
-  if(!sb){return;}
-  setSyncStatus('pending','Saving…');
-  try{
-    await sb.from('jobs').upsert({id:job.id,data:job,updated_at:new Date().toISOString()});
-    setSyncStatus('ok','Live ✓');
-  }catch(e){
-    console.error('pushJob error',e);
-    setSyncStatus('err','Save failed');
-    showToast('Failed to sync — check connection','error');
-  }
-}
-
-async function deleteJobRemote(id){
-  lsSet('vrs_jobs',jobs);
-  if(!sb){return;}
-  setSyncStatus('pending','Saving…');
-  try{
-    await sb.from('jobs').delete().eq('id',id);
-    setSyncStatus('ok','Live ✓');
-  }catch(e){console.error('deleteJob error',e);setSyncStatus('err','Delete failed');}
-}
-
-async function pushConfig(key,data){
-  lsSet('vrs_'+key,data);
-  if(!sb){return;}
-  try{
-    await sb.from('config').upsert({key,data,updated_at:new Date().toISOString()});
-  }catch(e){console.error('pushConfig error',e);}
-}
-
-// ══════════════════════════════════════════════════
-// SYNC STATUS UI
-// ══════════════════════════════════════════════════
-function setSyncStatus(state,label){
-  const dot=document.getElementById('syncDot');
-  const lbl=document.getElementById('syncLabel');
-  if(!dot||!lbl)return;
-  dot.className='sync-dot '+state;
-  lbl.textContent=label;
-}
-
-// ══════════════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════════════
-let toastTimer=null;
-function showToast(msg,type='success',dur=3000){
-  const t=document.getElementById('toast');
-  const icons={success:'✓',error:'✕',info:'↻'};
-  t.innerHTML=`<span>${icons[type]||'•'}</span> ${msg}`;
-  t.className='toast '+type+' show';
-  if(toastTimer)clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),dur);
-}
-
-// ══════════════════════════════════════════════════
-// CONNECTION MANAGER MODAL
-// ══════════════════════════════════════════════════
-function openManageConn(){
-  document.getElementById('connUrl').value=lsGet('vrs_sb_url','');
-  document.getElementById('connKey').value=lsGet('vrs_sb_key','');
-  const st=document.getElementById('connStatus');
-  const dot=document.getElementById('syncDot');
-  const ok=dot&&dot.classList.contains('ok');
-  st.style.cssText=ok?'background:#f0fdf4;color:#14532d;border:1px solid #16a34a;':'background:#fef2f2;color:#7f1d1d;border:1px solid #dc2626;';
-  st.textContent=ok?'🟢 Connected and syncing live':'🔴 Not connected — changes are local only';
-  document.getElementById('connModal').classList.remove('hidden');
-}
-function closeManageConn(){document.getElementById('connModal').classList.add('hidden');}
-async function reconnect(){
-  const url=document.getElementById('connUrl').value.trim();
-  const key=document.getElementById('connKey').value.trim();
-  lsSet('vrs_sb_url',url); lsSet('vrs_sb_key',key);
-  closeManageConn();
-  await initSupabase(url,key);
-  showToast('Reconnecting…','info');
-}
-function resetConn(){
-  if(!confirm('Disconnect from Supabase? The app will work offline only.'))return;
-  lsSet('vrs_sb_url',''); lsSet('vrs_sb_key','');
-  sb=null; realtimeSub=null;
-  setSyncStatus('offline','Offline');
-  closeManageConn();
-  showToast('Disconnected. Working offline.','info');
-}
-
-// ══════════════════════════════════════════════════
-// VIEW SWITCHING
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// VIEW
+// ══════════════════════════════════════════
 function switchView(v){
   document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
   document.querySelector(`.nav-tab[onclick="switchView('${v}')"]`).classList.add('active');
-  if(v==='summary')renderSummary();
+  if(v==='summary') renderSummary();
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // WEEK HELPERS
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function getWeekStart(off=0){
   const n=new Date(),d=n.getDay(),sun=new Date(n.setDate(n.getDate()-d));
   sun.setDate(sun.getDate()+off*7);sun.setHours(0,0,0,0);return sun;
@@ -833,49 +444,73 @@ function getWeekDays(off=0){
 function fmtDate(d){return d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});}
 function isToday(d){const n=new Date();return d.getDate()===n.getDate()&&d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CONSECUTIVE SHIFT LOGIC
-// ══════════════════════════════════════════════════
-function getConsecutive(driverId,targetDay,targetTime){
-  const isAM=t=>t<'12:30';
-  const tp=isAM(targetTime)?'AM':'PM';
-  const worked=new Set();
+// All shifts sorted. A "shift" = a specific day+period (AM/PM).
+// Count how many unbroken shifts ending just before target.
+// ══════════════════════════════════════════
+function getConsecutive(driverId, targetDay, targetTime){
+  const isAM = t => t < '12:30';
+  const targetPeriod = isAM(targetTime) ? 'AM' : 'PM';
+
+  // Build set of all (day, period) shifts this driver worked
+  const worked = new Set();
   jobs.forEach(j=>{
-    if(!(j.drivers||[]).includes(driverId))return;
-    worked.add(j.day+'_'+(isAM(j.time)?'AM':'PM'));
+    if(!(j.drivers||[]).includes(driverId)) return;
+    worked.add(j.day + '_' + (isAM(j.time)?'AM':'PM'));
   });
-  const allDays=[...new Set([...jobs.map(j=>j.day),targetDay])].sort();
-  const timeline=[];
-  const cur=new Date(allDays[0]);
-  const end=new Date(allDays[allDays.length-1]);end.setDate(end.getDate()+1);
-  while(cur<=end){const ds=cur.toISOString().slice(0,10);timeline.push(ds+'_AM',ds+'_PM');cur.setDate(cur.getDate()+1);}
-  const tk=targetDay+'_'+tp;
-  const tIdx=timeline.indexOf(tk);
-  if(tIdx<=0)return 0;
+
+  // Generate full ordered timeline around the worked dates + target
+  const allDays = [...new Set([...jobs.map(j=>j.day), targetDay])].sort();
+  const first = allDays[0];
+  const last = allDays[allDays.length-1];
+  const timeline = [];
+  const cur = new Date(first);
+  const end = new Date(last); end.setDate(end.getDate()+1);
+  while(cur <= end){
+    const ds = cur.toISOString().slice(0,10);
+    timeline.push(ds+'_AM');
+    timeline.push(ds+'_PM');
+    cur.setDate(cur.getDate()+1);
+  }
+
+  const targetKey = targetDay+'_'+targetPeriod;
+  const tIdx = timeline.indexOf(targetKey);
+  if(tIdx <= 0) return 0;
+
   let count=0;
-  for(let i=tIdx-1;i>=0;i--){if(worked.has(timeline[i]))count++;else break;}
+  for(let i=tIdx-1;i>=0;i--){
+    if(worked.has(timeline[i])) count++;
+    else break;
+  }
   return count;
 }
+
 function consecLabel(n){
-  if(n<=0)return null;
-  const ord=n+1,s=ord===2?'nd':ord===3?'rd':'th';
-  const cls=n===1?'consec-1':n===2?'consec-2':'consec-3';
-  return{text:`${ord}${s} consecutive shift${n>=2?' — fatigue risk':''}`,cls};
+  if(n<=0) return null;
+  const ordinal = n+1;
+  const ord = ordinal===2?'nd':ordinal===3?'rd':'th';
+  const cls = n===1?'consec-1':n===2?'consec-2':'consec-3';
+  const warn = n>=2?' — fatigue risk':'';
+  return {text:`${ordinal}${ord} consecutive shift${warn}`, cls};
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // RENDER CALENDAR
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function render(){
   const days=getWeekDays(weekOffset);
   document.getElementById('weekLabel').textContent=`${fmtDate(days[0])} – ${fmtDate(days[6])}`;
+
   const hdr=document.getElementById('calHeader');
   hdr.innerHTML=`<div class="cal-header-cell" style="font-size:10px;">Time</div>`;
   days.forEach(d=>{
     const t=isToday(d);
     hdr.innerHTML+=`<div class="cal-header-cell${t?' today':''}">${DAYS[d.getDay()]}<br><span style="font-size:17px;">${d.getDate()}</span></div>`;
   });
-  const body=document.getElementById('calBody');body.innerHTML='';
+
+  const body=document.getElementById('calBody');
+  body.innerHTML='';
   TIME_SLOTS.forEach(slot=>{
     const row=document.createElement('div');
     row.className='time-row'+(slot==='BREAK'?' break-row':'');
@@ -887,7 +522,8 @@ function render(){
       days.forEach(d=>{
         const ds=d.toISOString().slice(0,10);
         const cell=document.createElement('div');
-        cell.className='day-cell';cell.dataset.day=ds;cell.dataset.time=slot;
+        cell.className='day-cell';
+        cell.dataset.day=ds; cell.dataset.time=slot;
         setupDrop(cell);
         jobs.filter(j=>j.day===ds&&j.time===slot).forEach(j=>cell.appendChild(buildCard(j)));
         const btn=document.createElement('button');
@@ -905,12 +541,15 @@ function buildCard(job){
   const st=job.status||'received';
   const si=STATUSES.find(s=>s.k===st)||STATUSES[0];
   const wrap=document.createElement('div');
-  wrap.className=`job-card s-${st}`;wrap.draggable=true;
+  wrap.className=`job-card s-${st}`;
+  wrap.draggable=true;
   setupDrag(wrap,job.id);
+
   const extras=[];
   if(job.arrowBoard)extras.push('AB');if(job.cones)extras.push('Cones');
   if(job.barricades)extras.push('Barr.');if(job.signs)extras.push('Signs');
   if(job.flagger)extras.push('Flagger');if(job.portableLight)extras.push('Lights');
+
   wrap.innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
       <span class="status-badge" style="background:${si.bg};color:${si.tc};border:1px solid ${si.border};">${si.label}</span>
@@ -923,30 +562,33 @@ function buildCard(job){
     <div class="driver-slots" id="ds_${job.id}"></div>
     <div class="vehicle-slots" id="vs_${job.id}"></div>
     <div class="card-actions">
-      <button class="btn-ic" title="Status" onclick="openStatusModal('${job.id}')">🔁</button>
+      <button class="btn-ic" title="Change Status" onclick="openStatusModal('${job.id}')">🔁</button>
       <button class="btn-ic" title="Edit" onclick="openEditJob('${job.id}')">✏️</button>
       <button class="btn-ic" title="Delete" onclick="deleteJob('${job.id}')">🗑️</button>
     </div>`;
-  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+
+  const slotCount=Math.max(job.personnel||1,job.tmas||0,1);
   const dEl=wrap.querySelector(`#ds_${job.id}`);
   const vEl=wrap.querySelector(`#vs_${job.id}`);
-  for(let i=0;i<sc;i++){
+
+  for(let i=0;i<slotCount;i++){
     const dId=(job.drivers||[])[i];
-    const drv=drivers.find(d=>d.id===dId);
+    const driver=drivers.find(d=>d.id===dId);
     const ds=document.createElement('div');
-    ds.className='d-slot'+(drv?' assigned':'');
-    ds.textContent=drv?shortName(drv.name):`D${i+1}`;
-    if(drv){ds.style.background=drv.color;ds.style.borderColor=drv.color;}
-    if(drv&&dDayCount(drv.id,job.day)>=2){const w=document.createElement('span');w.className='warn-dot';ds.appendChild(w);}
-    ds.title=drv?`${drv.name} — click to reassign`:'Assign driver';
+    ds.className='d-slot'+(driver?' assigned':'');
+    ds.textContent=driver?shortName(driver.name):`D${i+1}`;
+    if(driver){ds.style.background=driver.color;ds.style.borderColor=driver.color;}
+    if(driver&&dDayCount(driver.id,job.day)>=2){const w=document.createElement('span');w.className='warn-dot';ds.appendChild(w);}
+    ds.title=driver?`${driver.name} — click to reassign`:'Assign driver';
     ds.onclick=()=>openDriverPick(job.id,i);
     dEl.appendChild(ds);
+
     const vId=(job.vehicles||[])[i];
-    const veh=vehicles.find(v=>v.id===vId);
+    const vehicle=vehicles.find(v=>v.id===vId);
     const vs=document.createElement('div');
-    vs.className='v-slot'+(veh?' assigned':'');
-    vs.textContent=veh?`${VICONS[veh.type]||'🚗'}${veh.name}`:`V${i+1}`;
-    vs.title=veh?`${veh.name} — click to reassign`:'Assign vehicle';
+    vs.className='v-slot'+(vehicle?' assigned':'');
+    vs.textContent=vehicle?`${VICONS[vehicle.type]||'🚗'}${vehicle.name}`:`V${i+1}`;
+    vs.title=vehicle?`${vehicle.name} — click to reassign`:'Assign vehicle';
     vs.onclick=()=>openVehiclePick(job.id,i);
     vEl.appendChild(vs);
   }
@@ -960,9 +602,9 @@ function renderLegend(){
     <div class="legend-item"><div class="legend-dot" style="background:${d.color}"></div><span>${d.name}</span></div>`).join('');
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // DRAG & DROP
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 let dragId=null;
 function setupDrag(el,id){
   el.addEventListener('dragstart',e=>{dragId=id;el.classList.add('dragging');e.dataTransfer.setData('text/plain',id);e.stopPropagation();});
@@ -976,19 +618,19 @@ function setupDrop(cell){
     const id=e.dataTransfer.getData('text/plain')||dragId;
     if(!id||!cell.dataset.day)return;
     const j=jobs.find(j=>j.id===id);
-    if(j){j.day=cell.dataset.day;j.time=cell.dataset.time;pushJob(j);render();}
+    if(j){j.day=cell.dataset.day;j.time=cell.dataset.time;save();render();}
   });
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // WEEK NAV
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function changeWeek(d){weekOffset+=d;render();}
 function goToday(){weekOffset=0;render();}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // JOB FORM
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function fillDays(sel){
   const days=getWeekDays(weekOffset);
   document.getElementById('jDay').innerHTML=days.map(d=>{
@@ -1009,7 +651,7 @@ function openAddJob(day,time){
   editJobId=null;
   document.getElementById('jobModalTitle').textContent='Add New Job';
   document.getElementById('jobModalError').classList.add('hidden');
-  fillDays(day);fillManagers('');
+  fillDays(day); fillManagers('');
   document.getElementById('jTime').value=time||'09:00';
   document.getElementById('jType').value='';
   document.getElementById('jTMAs').value=1;
@@ -1026,7 +668,7 @@ function openEditJob(id){
   editJobId=id;
   document.getElementById('jobModalTitle').textContent='Edit Job';
   document.getElementById('jobModalError').classList.add('hidden');
-  fillDays(j.day);fillManagers(j.manager||'');
+  fillDays(j.day); fillManagers(j.manager||'');
   document.getElementById('jTime').value=j.time;
   document.getElementById('jType').value=j.type||'';
   document.getElementById('jTMAs').value=j.tmas??1;
@@ -1054,34 +696,33 @@ function saveJob(){
   const data={day,time,
     manager:document.getElementById('jManager').value,
     type:document.getElementById('jType').value,
-    tmas,personnel,status:document.getElementById('jStatus').value||'received',
+    tmas,personnel,
+    status:document.getElementById('jStatus').value||'received',
     location:document.getElementById('jLocation').value.trim(),
     notes:document.getElementById('jNotes').value.trim(),
     specialInstruction:document.getElementById('jSpecial').checked,
-    arrowBoard:document.getElementById('jArrowBoard').checked,cones:document.getElementById('jCones').checked,
-    barricades:document.getElementById('jBarricades').checked,signs:document.getElementById('jSigns').checked,
-    flagger:document.getElementById('jFlagger').checked,portableLight:document.getElementById('jPortableLight').checked,
+    arrowBoard:document.getElementById('jArrowBoard').checked,
+    cones:document.getElementById('jCones').checked,
+    barricades:document.getElementById('jBarricades').checked,
+    signs:document.getElementById('jSigns').checked,
+    flagger:document.getElementById('jFlagger').checked,
+    portableLight:document.getElementById('jPortableLight').checked,
   };
   if(editJobId){
-    const idx=jobs.findIndex(j=>j.id===editJobId);const ex=jobs[idx];
+    const idx=jobs.findIndex(j=>j.id===editJobId);
+    const ex=jobs[idx];
     const sc=Math.max(personnel,tmas,1);
-    const updated={...ex,...data,drivers:(ex.drivers||[]).slice(0,sc),vehicles:(ex.vehicles||[]).slice(0,sc)};
-    jobs[idx]=updated;pushJob(updated);
+    jobs[idx]={...ex,...data,drivers:(ex.drivers||[]).slice(0,sc),vehicles:(ex.vehicles||[]).slice(0,sc)};
   } else {
-    const newJob={id:'j'+Date.now(),...data,drivers:[],vehicles:[]};
-    jobs.push(newJob);pushJob(newJob);
+    jobs.push({id:'j'+Date.now(),...data,drivers:[],vehicles:[]});
   }
-  closeJobModal();render();showToast('Job saved','success');
+  save();closeJobModal();render();
 }
-function deleteJob(id){
-  if(!confirm('Delete this job?'))return;
-  jobs=jobs.filter(j=>j.id!==id);
-  deleteJobRemote(id);render();showToast('Job deleted','success');
-}
+function deleteJob(id){if(!confirm('Delete this job?'))return;jobs=jobs.filter(j=>j.id!==id);save();render();}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // STATUS MODAL
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openStatusModal(id){
   statusJobId=id;
   const j=jobs.find(j=>j.id===id);
@@ -1092,20 +733,16 @@ function openStatusModal(id){
     div.className='s-opt'+(j.status===s.k?' selected':'');
     div.style.cssText=`background:${s.bg};border-color:${s.border};color:${s.tc};`;
     div.textContent=s.label;
-    div.onclick=()=>{
-      const j2=jobs.find(j=>j.id===statusJobId);
-      if(j2){j2.status=s.k;pushJob(j2);render();}
-      closeStatusModal();showToast(`Status → ${s.label}`,'success');
-    };
+    div.onclick=()=>{const j2=jobs.find(j=>j.id===statusJobId);if(j2){j2.status=s.k;save();render();}closeStatusModal();};
     grid.appendChild(div);
   });
   document.getElementById('statusModal').classList.remove('hidden');
 }
 function closeStatusModal(){document.getElementById('statusModal').classList.add('hidden');}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // DRIVER PICK
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openDriverPick(jobId,slotIdx){
   dPickCtx={jobId,slotIdx};
   const job=jobs.find(j=>j.id===jobId);
@@ -1113,19 +750,21 @@ function openDriverPick(jobId,slotIdx){
   document.getElementById('dPickInfo').textContent=`Slot ${slotIdx+1} of ${sc} — ${job.type||'Job'} (${job.day})`;
   document.getElementById('dPickWarn').classList.add('hidden');
   const grid=document.getElementById('driverGrid');grid.innerHTML='';
+
   drivers.forEach(d=>{
-    const dc=dDayCount(d.id,job.day);
+    const dayCount=dDayCount(d.id,job.day);
     const consec=getConsecutive(d.id,job.day,job.time);
-    const cur=(job.drivers||[])[slotIdx]===d.id;
+    const curSlot=(job.drivers||[])[slotIdx]===d.id;
     const div=document.createElement('div');
-    div.className='d-opt'+(cur?' selected':'');
+    div.className='d-opt'+(curSlot?' selected':'');
     div.style.background=d.color;
     const cl=consecLabel(consec);
-    div.innerHTML=`${d.name}${dc>0?`<br><span style="font-size:10px;opacity:.8">${dc} job${dc>1?'s':''} today</span>`:''}${cl?`<br><span class="consec ${cl.cls}">${cl.text}</span>`:''}`;
-    if(dc>=2)div.style.opacity='0.55';
+    div.innerHTML=`${d.name}${dayCount>0?`<br><span style="font-size:10px;opacity:.8">${dayCount} job${dayCount>1?'s':''} today</span>`:''}${cl?`<br><span class="consec ${cl.cls}">${cl.text}</span>`:''}`;
+    if(dayCount>=2) div.style.opacity='0.55';
     div.onclick=()=>assignDriver(d.id);
     grid.appendChild(div);
   });
+
   const u=document.createElement('div');
   u.className='d-opt unassign';u.innerHTML='✕<br><span style="font-size:11px;">Unassign</span>';
   u.onclick=()=>assignDriver(null);grid.appendChild(u);
@@ -1149,13 +788,13 @@ function assignDriver(dId){
     }
   }
   job.drivers[slotIdx]=dId||null;
-  pushJob(job);closeDriverPick();render();
+  save();closeDriverPick();render();
 }
 function closeDriverPick(){document.getElementById('driverPickModal').classList.add('hidden');}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // VEHICLE PICK
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openVehiclePick(jobId,slotIdx){
   vPickCtx={jobId,slotIdx};
   const job=jobs.find(j=>j.id===jobId);
@@ -1163,6 +802,7 @@ function openVehiclePick(jobId,slotIdx){
   document.getElementById('vPickInfo').textContent=`Vehicle Slot ${slotIdx+1} of ${sc} — ${job.type||'Job'}`;
   const grid=document.getElementById('vehiclePickGrid');grid.innerHTML='';
   const cur=(job.vehicles||[])[slotIdx];
+
   vehicles.forEach(v=>{
     const inUse=jobs.some(j=>j.id!==jobId&&j.day===job.day&&(j.vehicles||[]).includes(v.id));
     const isC=cur===v.id;
@@ -1175,9 +815,11 @@ function openVehiclePick(jobId,slotIdx){
     div.onclick=()=>assignVehicle(v.id);
     grid.appendChild(div);
   });
+
   const u=document.createElement('div');
   u.className='vpick-item';u.style.color='var(--muted)';
-  u.innerHTML=`<span>✕</span><span>Unassign</span>`;u.onclick=()=>assignVehicle(null);grid.appendChild(u);
+  u.innerHTML=`<span>✕</span><span>Unassign</span>`;
+  u.onclick=()=>assignVehicle(null);grid.appendChild(u);
   document.getElementById('vehiclePickModal').classList.remove('hidden');
 }
 function assignVehicle(vId){
@@ -1187,13 +829,13 @@ function assignVehicle(vId){
   const sc=Math.max(job.personnel||1,job.tmas||0,1);
   while(job.vehicles.length<sc)job.vehicles.push(null);
   job.vehicles[slotIdx]=vId||null;
-  pushJob(job);closeVehiclePick();render();
+  save();closeVehiclePick();render();
 }
 function closeVehiclePick(){document.getElementById('vehiclePickModal').classList.add('hidden');}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // MANAGE DRIVERS
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openManageDrivers(){renderDList();document.getElementById('driversModal').classList.remove('hidden');}
 function closeManageDrivers(){document.getElementById('driversModal').classList.add('hidden');render();}
 function renderDList(){
@@ -1211,22 +853,19 @@ function addDriver(){
   if(drivers.find(d=>d.name.toLowerCase()===name.toLowerCase())){alert('Already exists.');return;}
   drivers.push({id:'d'+Date.now(),name,color});
   document.getElementById('newDriverName').value='';
-  pushConfig('drivers',drivers);renderDList();render();
+  save();renderDList();
 }
 function removeDriver(id){
   if(!confirm('Remove driver? Their assignments will be cleared.'))return;
   drivers=drivers.filter(d=>d.id!==id);
   jobs.forEach(j=>{if(j.drivers)j.drivers=j.drivers.map(did=>did===id?null:did);});
-  jobs.forEach(j=>pushJob(j));
-  pushConfig('drivers',drivers);renderDList();render();
+  save();renderDList();
 }
-function updateDColor(id,color){
-  const d=drivers.find(d=>d.id===id);if(d){d.color=color;pushConfig('drivers',drivers);}
-}
+function updateDColor(id,color){const d=drivers.find(d=>d.id===id);if(d){d.color=color;save();}}
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // MANAGE CLIENTS
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openManageClients(){renderCList();document.getElementById('clientsModal').classList.remove('hidden');}
 function closeManageClients(){document.getElementById('clientsModal').classList.add('hidden');render();}
 function renderCList(){
@@ -1245,17 +884,16 @@ function addClient(){
   if(clients.find(c=>c.name.toLowerCase()===name.toLowerCase())){alert('Already exists.');return;}
   clients.push({id:'c'+Date.now(),name,contact});
   document.getElementById('newClientName').value='';document.getElementById('newClientContact').value='';
-  pushConfig('clients',clients);renderCList();
+  save();renderCList();
 }
 function removeClient(id){
   if(!confirm('Remove client?'))return;
-  clients=clients.filter(c=>c.id!==id);
-  pushConfig('clients',clients);renderCList();
+  clients=clients.filter(c=>c.id!==id);save();renderCList();
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // MANAGE VEHICLES
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function openManageVehicles(){renderVList();document.getElementById('vehiclesModal').classList.remove('hidden');}
 function closeManageVehicles(){document.getElementById('vehiclesModal').classList.add('hidden');render();}
 function renderVList(){
@@ -1275,28 +913,35 @@ function addVehicle(){
   if(!name){alert('Enter a vehicle name.');return;}
   vehicles.push({id:'v'+Date.now(),name,type,notes});
   document.getElementById('newVehicleName').value='';document.getElementById('newVehicleNotes').value='';
-  pushConfig('vehicles',vehicles);renderVList();
+  save();renderVList();
 }
 function removeVehicle(id){
   if(!confirm('Remove vehicle?'))return;
   vehicles=vehicles.filter(v=>v.id!==id);
   jobs.forEach(j=>{if(j.vehicles)j.vehicles=j.vehicles.map(vid=>vid===id?null:vid);});
-  jobs.forEach(j=>pushJob(j));
-  pushConfig('vehicles',vehicles);renderVList();render();
+  save();renderVList();
 }
 
-// ══════════════════════════════════════════════════
-// SUMMARY
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// SUMMARY DASHBOARD
+// ══════════════════════════════════════════
 let charts={};
 function renderSummary(){
   const years=[...new Set(jobs.map(j=>j.day.slice(0,4)))].sort();
-  const ySel=document.getElementById('sumYear'),mSel=document.getElementById('sumMonth');
+  const ySel=document.getElementById('sumYear');
+  const mSel=document.getElementById('sumMonth');
   const yCur=ySel.value,mCur=mSel.value;
   ySel.innerHTML=`<option value="">All Time</option>`+years.map(y=>`<option value="${y}"${y===yCur?' selected':''}>${y}</option>`).join('');
   mSel.innerHTML=`<option value="">All Months</option>`+MONTHS.map((m,i)=>`<option value="${String(i+1).padStart(2,'0')}"${String(i+1).padStart(2,'0')===mCur?' selected':''}>${m}</option>`).join('');
+
   const fy=ySel.value,fm=mSel.value;
-  const data=jobs.filter(j=>{if(fy&&!j.day.startsWith(fy))return false;if(fm&&j.day.slice(5,7)!==fm)return false;return true;});
+  const data=jobs.filter(j=>{
+    if(fy&&!j.day.startsWith(fy))return false;
+    if(fm&&j.day.slice(5,7)!==fm)return false;
+    return true;
+  });
+
+  // KPIs
   const done=data.filter(j=>j.status==='completed').length;
   const pax=data.reduce((a,j)=>a+(j.personnel||1),0);
   const uc=new Set(data.map(j=>j.manager).filter(Boolean)).size;
@@ -1305,69 +950,101 @@ function renderSummary(){
     <div class="kpi-card"><div class="kpi-num" style="color:#16a34a;">${done}</div><div class="kpi-label">Completed</div></div>
     <div class="kpi-card"><div class="kpi-num" style="color:#ea580c;">${pax}</div><div class="kpi-label">Personnel Deployed</div></div>
     <div class="kpi-card"><div class="kpi-num" style="color:#7c3aed;">${uc}</div><div class="kpi-label">Active Clients</div></div>`;
-  Object.values(charts).forEach(c=>{try{c.destroy();}catch(e){}});charts={};
+
+  // Destroy old
+  Object.values(charts).forEach(c=>{try{c.destroy();}catch(e){}});
+  charts={};
+
   const sg=document.getElementById('summaryGrid');sg.innerHTML='';
-  sg.appendChild(buildBarCard('📋 Jobs by Client',data,j=>j.manager||'Unknown','#3b82f6'));
-  sg.appendChild(buildBarCard('🔧 Jobs by Type',data,j=>j.type||'Unknown','#8b5cf6'));
+
+  // 1. Jobs by Client
+  sg.appendChild(buildBarCard('📋 Jobs by Client', data, j=>j.manager||'Unknown', 'ch_client', '#3b82f6'));
+  // 2. Jobs by Type
+  sg.appendChild(buildBarCard('🔧 Jobs by Type', data, j=>j.type||'Unknown', 'ch_type', '#8b5cf6'));
+  // 3. Jobs by Driver
   const dCounts={};
-  data.forEach(j=>(j.drivers||[]).forEach(did=>{if(!did)return;const d=drivers.find(dr=>dr.id===did);if(d)dCounts[d.name]=(dCounts[d.name]||0)+1;}));
-  sg.appendChild(buildRawBarCard('👷 Driver Assignments',dCounts,'#22c55e'));
-  sg.appendChild(buildDonut(data));sg.appendChild(buildTrend(data));
+  data.forEach(j=>(j.drivers||[]).forEach(did=>{
+    if(!did)return;const d=drivers.find(dr=>dr.id===did);
+    if(d)dCounts[d.name]=(dCounts[d.name]||0)+1;
+  }));
+  sg.appendChild(buildRawBarCard('👷 Driver Assignments',dCounts,'ch_driver','#22c55e'));
+  // 4. Status donut
+  sg.appendChild(buildDonut(data));
+  // 5. Monthly trend
+  sg.appendChild(buildTrend(data));
+  // 6. Vehicle utilization
   const vCounts={};
-  data.forEach(j=>(j.vehicles||[]).forEach(vid=>{if(!vid)return;const v=vehicles.find(vv=>vv.id===vid);if(v)vCounts[v.name]=(vCounts[v.name]||0)+1;}));
-  sg.appendChild(buildRawBarCard('🚛 Vehicle Utilization',vCounts,'#f97316'));
+  data.forEach(j=>(j.vehicles||[]).forEach(vid=>{
+    if(!vid)return;const v=vehicles.find(vv=>vv.id===vid);
+    if(v)vCounts[v.name]=(vCounts[v.name]||0)+1;
+  }));
+  sg.appendChild(buildRawBarCard('🚛 Vehicle Utilization',vCounts,'ch_vehicle','#f97316'));
 }
-function buildBarCard(title,data,keyFn,color){
-  const counts={};data.forEach(j=>{const k=keyFn(j);counts[k]=(counts[k]||0)+1;});
-  return buildRawBarCard(title,counts,color);
+
+function buildBarCard(title,data,keyFn,id,color){
+  const counts={};
+  data.forEach(j=>{const k=keyFn(j);counts[k]=(counts[k]||0)+1;});
+  return buildRawBarCard(title,counts,id,color);
 }
-function buildRawBarCard(title,counts,color){
+function buildRawBarCard(title,counts,id,color){
   const card=document.createElement('div');card.className='s-card';
   const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
   const max=sorted.length?sorted[0][1]:1;
   if(!sorted.length){card.innerHTML=`<h3>${title}</h3><p style="font-size:12px;color:var(--muted);">No data yet.</p>`;return card;}
   card.innerHTML=`<h3>${title}</h3>`+sorted.map(([k,v])=>`
-    <div class="stat-row"><span style="font-size:11px;min-width:80px;">${k}</span>
+    <div class="stat-row">
+      <span style="font-size:11px;min-width:80px;">${k}</span>
       <div class="stat-bar-wrap"><div class="stat-bar" style="width:${Math.round(v/max*100)}%;background:${color};"></div></div>
-      <span class="stat-count">${v}</span></div>`).join('');
+      <span class="stat-count">${v}</span>
+    </div>`).join('');
   return card;
 }
 function buildDonut(data){
   const card=document.createElement('div');card.className='s-card';
-  const cid='ch_d_'+Date.now();
+  const cid='ch_donut_'+Date.now();
   card.innerHTML=`<h3>🎯 Status Breakdown</h3><div class="chart-container"><canvas id="${cid}"></canvas></div>`;
   setTimeout(()=>{
     const counts={};STATUSES.forEach(s=>counts[s.k]=0);
     data.forEach(j=>counts[j.status||'received']=(counts[j.status||'received']||0)+1);
     const ctx=document.getElementById(cid);if(!ctx)return;
-    charts[cid]=new Chart(ctx,{type:'doughnut',data:{labels:STATUSES.map(s=>s.label),datasets:[{data:STATUSES.map(s=>counts[s.k]),
-      backgroundColor:['#fefce8','#f5f3ff','#eff6ff','#fff7ed','#f0fdf4','#fef2f2'],
-      borderColor:['#ca8a04','#7c3aed','#2563eb','#ea580c','#16a34a','#dc2626'],borderWidth:2}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}}});
-  },80);return card;
+    charts[cid]=new Chart(ctx,{type:'doughnut',data:{
+      labels:STATUSES.map(s=>s.label),
+      datasets:[{data:STATUSES.map(s=>counts[s.k]),
+        backgroundColor:['#fefce8','#f5f3ff','#eff6ff','#fff7ed','#f0fdf4','#fef2f2'],
+        borderColor:['#ca8a04','#7c3aed','#2563eb','#ea580c','#16a34a','#dc2626'],borderWidth:2}]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}}});
+  },80);
+  return card;
 }
 function buildTrend(data){
   const card=document.createElement('div');card.className='s-card';
-  const cid='ch_t_'+Date.now();
+  const cid='ch_trend_'+Date.now();
   card.innerHTML=`<h3>📈 Jobs by Month</h3><div class="chart-container"><canvas id="${cid}"></canvas></div>`;
   setTimeout(()=>{
-    const mc={};data.forEach(j=>{const ym=j.day.slice(0,7);mc[ym]=(mc[ym]||0)+1;});
+    const mc={};
+    data.forEach(j=>{const ym=j.day.slice(0,7);mc[ym]=(mc[ym]||0)+1;});
     const sorted=Object.entries(mc).sort((a,b)=>a[0].localeCompare(b[0]));
     const ctx=document.getElementById(cid);if(!ctx||!sorted.length)return;
     charts[cid]=new Chart(ctx,{type:'bar',data:{
       labels:sorted.map(([ym])=>{const[y,m]=ym.split('-');return MONTHS[parseInt(m)-1].slice(0,3)+' '+y;}),
-      datasets:[{label:'Jobs',data:sorted.map(([,v])=>v),backgroundColor:'#6366f1',borderRadius:5}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
-  },80);return card;
+      datasets:[{label:'Jobs',data:sorted.map(([,v])=>v),backgroundColor:'#6366f1',borderRadius:5}]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
+  },80);
+  return card;
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // BACKDROP CLOSE
-// ══════════════════════════════════════════════════
-['jobModal','statusModal','driverPickModal','vehiclePickModal','driversModal','clientsModal','vehiclesModal','connModal'].forEach(id=>{
+// ══════════════════════════════════════════
+['jobModal','statusModal','driverPickModal','vehiclePickModal','driversModal','clientsModal','vehiclesModal'].forEach(id=>{
   const el=document.getElementById(id);
   if(el)el.addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
 });
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+render();
 </script>
 </body>
 </html>
