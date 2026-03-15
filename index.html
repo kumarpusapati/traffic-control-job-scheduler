@@ -1,0 +1,1373 @@
+/* ── SETUP SCREEN ── */
+#setupScreen{
+  display:block;
+  min-height:100vh;
+  background:#1a1d23;
+  padding:0;
+  margin:0;
+}
+.setup-inner{
+  max-width:480px;
+  margin:0 auto;
+  padding:32px 20px 60px;
+}
+.setup-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:20px;
+  color:#fff;
+  margin-bottom:32px;
+  letter-spacing:-.3px;
+}
+.setup-logo span{color:var(--accent);}
+.setup-title{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:26px;
+  color:#fff;
+  margin-bottom:8px;
+  line-height:1.2;
+}
+.setup-sub{
+  font-size:14px;
+  color:rgba(255,255,255,.5);
+  margin-bottom:32px;
+  line-height:1.5;
+}
+.setup-label{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  color:rgba(255,255,255,.5);
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.setup-field{
+  width:100%;
+  background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  padding:14px 16px;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  color:#fff;
+  outline:none;
+  margin-bottom:20px;
+  -webkit-appearance:none;
+  transition:border-color .15s;
+}
+.setup-field:focus{border-color:var(--accent);background:rgba(58,107,255,.15);}
+.setup-field::placeholder{color:rgba(255,255,255,.25);}
+.setup-btn{
+  display:block;
+  width:100%;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:16px;
+  font-family:'Syne',sans-serif;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:8px;
+  margin-bottom:28px;
+  -webkit-appearance:none;
+  letter-spacing:-.2px;
+}
+.setup-btn:active{opacity:.85;}
+.setup-err{
+  background:#7f1d1d;
+  border:1px solid #ef4444;
+  color:#fca5a5;
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:13px;
+  font-weight:500;
+  margin-bottom:16px;
+}
+.setup-help-toggle{
+  background:none;
+  border:none;
+  color:rgba(255,255,255,.4);
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  padding:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  text-align:left;
+  margin-bottom:4px;
+}
+.setup-help-toggle:active{color:rgba(255,255,255,.7);}
+.setup-steps{display:none;margin-top:16px;}
+.setup-step-row{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.setup-step-num{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
+.setup-step-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5;padding-top:3px;}
+.setup-step-text strong{color:rgba(255,255,255,.8);display:block;margin-bottom:2px;font-weight:700;}
+.setup-code{background:rgba(0,0,0,.4);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:10px;color:rgba(255,255,255,.6);line-height:1.6;margin-top:8px;white-space:pre;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+/* ── VIEWS ── */
+.view{display:none;}.view.active{display:block;}
+
+/* ── TOOLBAR ── */
+.toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.week-nav{display:flex;align-items:center;gap:6px;}
+.week-nav button{background:var(--bg);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.week-nav button:hover{background:var(--accent-soft);border-color:var(--accent);}
+.week-label{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;min-width:170px;text-align:center;}
+.btn-today{background:var(--bg);color:var(--accent);border:1.5px solid var(--accent);border-radius:8px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-today:hover{background:var(--accent-soft);}
+.status-legend{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.status-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:default;white-space:nowrap;}
+.legend{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;background:var(--bg);border-radius:20px;padding:2px 8px 2px 5px;border:1px solid var(--border);}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+/* ── CALENDAR ── */
+.calendar-wrap{overflow-x:auto;padding:20px 24px;}
+.calendar{min-width:860px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+.cal-header{display:grid;grid-template-columns:80px repeat(7,1fr);background:var(--text);color:#fff;}
+.cal-header-cell{padding:10px 6px;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:.5px;border-right:1px solid rgba(255,255,255,.08);}
+.cal-header-cell.today{color:var(--accent);}
+.time-row{display:grid;grid-template-columns:80px repeat(7,1fr);border-bottom:1px solid var(--border);min-height:34px;}
+.time-row.break-row{background:var(--break-bg);min-height:28px;}
+.time-label{font-size:10px;color:var(--muted);font-weight:500;padding:5px 6px 4px;border-right:1px solid var(--border);white-space:nowrap;}
+.break-row .time-label{color:var(--break-text);font-weight:700;font-size:11px;display:flex;align-items:center;}
+.day-cell{border-right:1px solid var(--border);padding:3px;position:relative;min-height:34px;transition:background .1s;}
+.break-row .day-cell{display:flex;align-items:center;justify-content:center;}
+.break-label{font-size:10px;font-weight:800;color:var(--break-text);letter-spacing:1px;text-transform:uppercase;}
+.day-cell.drag-over{background:#dbeafe!important;}
+
+/* ── JOB CARD ── */
+.job-card{border-radius:7px;padding:5px 7px;margin-bottom:3px;position:relative;cursor:grab;border-left:4px solid #ccc;background:#fff;transition:box-shadow .15s,opacity .2s;}
+.job-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.13);}
+.job-card.dragging{opacity:.35;cursor:grabbing;}
+.job-card.s-received{background:#fefce8;border-left-color:#ca8a04;}
+.job-card.s-changed{background:#f5f3ff;border-left-color:#7c3aed;}
+.job-card.s-scheduled{background:#eff6ff;border-left-color:#2563eb;}
+.job-card.s-inprogress{background:#fff7ed;border-left-color:#ea580c;}
+.job-card.s-completed{background:#f0fdf4;border-left-color:#16a34a;}
+.job-card.s-cancelled{background:#fef2f2;border-left-color:#dc2626;opacity:.65;}
+.job-hdr{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.job-info{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3;}
+.special-note{font-size:10px;font-weight:700;color:#b91c1c;background:#fee2e2;border-radius:4px;padding:2px 5px;margin-bottom:3px;border-left:3px solid #ef4444;}
+.driver-slots,.vehicle-slots{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:3px;}
+.d-slot{border-radius:4px;font-size:9px;font-weight:700;padding:2px 5px;cursor:pointer;border:1.5px dashed #bbb;background:#fff;color:var(--muted);transition:all .15s;white-space:nowrap;max-width:72px;overflow:hidden;text-overflow:ellipsis;}
+.d-slot.assigned{border-style:solid;color:#fff;border-color:transparent;}
+.d-slot:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.v-slot{border-radius:4px;font-size:9px;font-weight:600;padding:2px 5px;cursor:pointer;border:1.5px dashed #aaa;background:#f8f8f8;color:var(--muted);transition:all .15s;white-space:nowrap;max-width:80px;overflow:hidden;text-overflow:ellipsis;}
+.v-slot.assigned{border-style:solid;border-color:#6366f1;background:#eef2ff;color:#3730a3;}
+.v-slot:hover{transform:translateY(-1px);}
+.card-actions{display:flex;gap:3px;justify-content:flex-end;margin-top:2px;}
+.btn-ic{background:none;border:none;cursor:pointer;font-size:11px;padding:2px 3px;border-radius:3px;opacity:.45;transition:opacity .15s,background .15s;}
+.btn-ic:hover{opacity:1;background:rgba(0,0,0,.07);}
+.add-job-btn{width:100%;background:none;border:1.5px dashed #ccc;border-radius:5px;padding:2px;cursor:pointer;font-size:10px;color:var(--muted);transition:all .15s;margin-top:2px;display:none;}
+.day-cell:hover .add-job-btn{display:block;}
+.add-job-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.status-badge{font-size:9px;font-weight:800;padding:1px 5px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-bottom:2px;}
+.warn-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#f59e0b;margin-left:2px;vertical-align:middle;}
+.tag{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;background:#eef1ff;color:var(--accent);margin-right:2px;margin-bottom:1px;}
+
+/* ── SAVING TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(60px);opacity:0;transition:all .25s;display:flex;align-items:center;gap:8px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:#16a34a;}
+.toast.error{background:#dc2626;}
+.toast.info{background:#2563eb;}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);animation:fadeIn .15s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border-radius:16px;padding:26px 30px;width:100%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:slideUp .2s ease;max-height:92vh;overflow-y:auto;}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h2{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;margin-bottom:18px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;}
+input,select,textarea{border:1.5px solid var(--border);border-radius:8px;padding:8px 11px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:var(--text);transition:border-color .15s;outline:none;}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);background:#fff;}
+.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;}
+.btn-ghost{background:none;border:1.5px solid var(--border);border-radius:8px;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.btn-primary:hover{opacity:.88;}
+.alert{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;border-radius:8px;padding:7px 11px;font-size:12px;font-weight:500;margin-bottom:10px;}
+.hidden{display:none!important;}
+.sec-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+.manage-list{display:flex;flex-direction:column;gap:5px;margin:8px 0;max-height:260px;overflow-y:auto;}
+.mi{display:flex;align-items:center;gap:8px;padding:7px 9px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+.mi-name{font-weight:600;font-size:12px;flex:1;}
+.mi-sub{font-size:11px;color:var(--muted);}
+input[type=color]{width:30px;height:26px;padding:1px 2px;cursor:pointer;border-radius:5px;}
+.extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.extra-item{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--bg);border-radius:7px;border:1.5px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;transition:border-color .15s,background .15s;user-select:none;}
+.extra-item input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;}
+.extra-item:has(input:checked){border-color:var(--accent);background:var(--accent-soft);}
+.driver-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0;}
+.d-opt{border-radius:8px;padding:9px 7px;text-align:center;cursor:pointer;font-size:11px;font-weight:700;color:#fff;transition:transform .12s,box-shadow .12s;border:3px solid transparent;}
+.d-opt:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.2);}
+.d-opt.selected{border-color:#fff;}
+.d-opt.unassign{background:var(--bg)!important;color:var(--muted);border:2px dashed #ccc;}
+.d-warn{background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:7px 11px;font-size:11px;color:#856404;margin-top:4px;}
+.consec{display:inline-block;border-radius:8px;font-size:9px;font-weight:800;padding:1px 6px;margin-top:3px;letter-spacing:.3px;}
+.consec-1{background:#f59e0b;color:#fff;}
+.consec-2{background:#ea580c;color:#fff;}
+.consec-3{background:#dc2626;color:#fff;}
+.vpick-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0;}
+.vpick-item{border-radius:8px;padding:9px 11px;cursor:pointer;font-size:12px;font-weight:700;border:2px solid var(--border);background:var(--bg);transition:all .15s;display:flex;align-items:center;gap:8px;}
+.vpick-item:hover{border-color:var(--accent);background:var(--accent-soft);}
+.vpick-item.selected{border-color:#6366f1;background:#eef2ff;}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.s-opt{border-radius:8px;padding:11px;cursor:pointer;font-size:13px;font-weight:700;border:2px solid transparent;transition:all .15s;text-align:center;}
+.s-opt:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.s-opt.selected{border-color:#1a1d23!important;transform:scale(1.03);}
+.vtbadge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:#e0e7ff;color:#3730a3;}
+
+/* ── SUMMARY ── */
+.summary-wrap{padding:20px 24px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.kpi-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;box-shadow:var(--shadow);text-align:center;}
+.kpi-num{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--accent);}
+.kpi-label{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;}
+.s-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:18px;box-shadow:var(--shadow);}
+.s-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:14px;}
+.stat-row{display:flex;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px;}
+.stat-row:last-child{border:none;}
+.stat-bar-wrap{flex:1;background:var(--bg);border-radius:4px;height:7px;overflow:hidden;}
+.stat-bar{height:100%;border-radius:4px;transition:width .4s ease;}
+.stat-count{font-weight:700;font-size:12px;min-width:20px;text-align:right;}
+.chart-container{position:relative;height:190px;}
+.sum-filter{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.sum-filter select{padding:6px 10px;font-size:13px;max-width:150px;}
+</style>
+</head>
+<body>
+
+<!-- ══ SETUP SCREEN ══ -->
+<div id="setupScreen" class="hidden">
+  <div class="setup-inner">
+    <div class="setup-logo">VR <span>Safety</span> Services</div>
+    <div class="setup-title">Connect to<br>Supabase</div>
+    <div class="setup-sub">Enter your project credentials once — saved to this device forever.</div>
+
+    <div id="setupError" class="setup-err hidden"></div>
+
+    <label class="setup-label" for="setupUrl">Project URL</label>
+    <input class="setup-field" type="url" id="setupUrl"
+      placeholder="https://xxxx.supabase.co"
+      autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+      inputmode="url">
+
+    <label class="setup-label" for="setupKey">Anon / Public Key</label>
+    <input class="setup-field" type="text" id="setupKey"
+      placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."
+      autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+
+    <button class="setup-btn" onclick="connectSupabase()">Connect &amp; Launch →</button>
+
+    <button class="setup-help-toggle" onclick="toggleSetupHelp()">
+      <span id="setupHelpArrow">▶</span> How to get these credentials
+    </button>
+    <div class="setup-steps" id="setupHelp">
+      <div class="setup-step-row">
+        <div class="setup-step-num">1</div>
+        <div class="setup-step-text"><strong>Go to supabase.com → New Project</strong>Sign up free, create a project named vr-scheduler. Wait ~2 min.</div>
+      </div>
+      <div class="setup-step-row">
+        <div class="setup-step-num">2</div>
+        <div class="setup-step-text">
+          <strong>SQL Editor → paste &amp; run this</strong>
+          <div class="setup-code">create table jobs (
+  id text primary key,
+  data jsonb not null,
+  updated_at timestamptz default now()
+);
+create table config (
+  key text primary key,
+  data jsonb not null,
+  updated_at timestamptz default now()
+);
+alter table jobs enable row level security;
+alter table config enable row level security;
+create policy "Allow all" on jobs
+  for all using (true) with check (true);
+create policy "Allow all" on config
+  for all using (true) with check (true);</div>
+        </div>
+      </div>
+      <div class="setup-step-row">
+        <div class="setup-step-num">3</div>
+        <div class="setup-step-text"><strong>Settings → API</strong>Copy the Project URL and anon/public key into the fields above.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mainApp" class="hidden">
+
+<!-- NAV -->
+<div class="app-nav">
+  <h1>VR <span>Safety</span> Services</h1>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchView('schedule')">📅 Schedule</button>
+    <button class="nav-tab" onclick="switchView('summary')">📊 Summary</button>
+  </div>
+  <div class="nav-actions">
+    <div class="sync-pill" id="syncPill" onclick="openManageConn()" title="Click to manage connection">
+      <div class="sync-dot pending" id="syncDot"></div>
+      <span id="syncLabel">Connecting…</span>
+    </div>
+    <button class="btn-nav" onclick="openManageClients()">🏢 Clients</button>
+    <button class="btn-nav" onclick="openManageVehicles()">🚛 Vehicles</button>
+    <button class="btn-nav" onclick="openManageDrivers()">👷 Drivers</button>
+    <button class="btn-add" onclick="openAddJobGlobal()">＋ Add Job</button>
+  </div>
+</div>
+
+<!-- SCHEDULE VIEW -->
+<div id="view-schedule" class="view active">
+  <div class="toolbar">
+    <div class="week-nav">
+      <button onclick="changeWeek(-1)">‹</button>
+      <div class="week-label" id="weekLabel"></div>
+      <button onclick="changeWeek(1)">›</button>
+    </div>
+    <button class="btn-today" onclick="goToday()">Today</button>
+    <div class="status-legend">
+      <span class="status-chip" style="background:#fefce8;border-color:#ca8a04;color:#713f12;">📨 Received</span>
+      <span class="status-chip" style="background:#f5f3ff;border-color:#7c3aed;color:#3b0764;">🔄 Changed</span>
+      <span class="status-chip" style="background:#eff6ff;border-color:#2563eb;color:#1e3a8a;">📋 Scheduled</span>
+      <span class="status-chip" style="background:#fff7ed;border-color:#ea580c;color:#7c2d12;">🔧 In Progress</span>
+      <span class="status-chip" style="background:#f0fdf4;border-color:#16a34a;color:#14532d;">✅ Completed</span>
+      <span class="status-chip" style="background:#fef2f2;border-color:#dc2626;color:#7f1d1d;">❌ Cancelled</span>
+    </div>
+    <div class="legend" id="driverLegend"></div>
+  </div>
+  <div class="calendar-wrap">
+    <div class="calendar">
+      <div class="cal-header" id="calHeader"></div>
+      <div class="cal-body" id="calBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY VIEW -->
+<div id="view-summary" class="view">
+  <div class="summary-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+      <div>
+        <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;">Operations Summary</h2>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px;">Aggregated metrics across all jobs</p>
+      </div>
+      <div class="sum-filter">
+        <select id="sumYear" onchange="renderSummary()"><option value="">All Time</option></select>
+        <select id="sumMonth" onchange="renderSummary()"><option value="">All Months</option></select>
+      </div>
+    </div>
+    <div class="kpi-grid" id="kpiGrid"></div>
+    <div class="summary-grid" id="summaryGrid"></div>
+  </div>
+</div>
+
+</div><!-- end mainApp -->
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════ MODALS ══════════ -->
+
+<!-- Job Form -->
+<div class="modal-overlay hidden" id="jobModal">
+  <div class="modal">
+    <h2 id="jobModalTitle">Add New Job</h2>
+    <div id="jobModalError" class="alert hidden"></div>
+    <div class="form-row">
+      <div class="fg"><label>Day</label><select id="jDay"></select></div>
+      <div class="fg"><label>Start Time</label><input type="time" id="jTime" value="09:00"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Client / Manager</label><select id="jManager"><option value="">Select…</option></select></div>
+      <div class="fg"><label>Job Type</label>
+        <select id="jType">
+          <option value="">Select…</option>
+          <option>Single Lane Closure</option><option>Double Lane Closure</option>
+          <option>Full Road Closure</option><option>Flagging Operation</option>
+          <option>Arrow Board Only</option><option>TMA Deployment</option>
+          <option>Mobile Operation</option><option>Express Lane Job</option><option>Special Event</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row3">
+      <div class="fg"><label># TMAs</label><input type="number" id="jTMAs" min="0" max="20" value="1"></div>
+      <div class="fg"><label># Personnel</label><input type="number" id="jPersonnel" min="1" max="30" value="1"></div>
+      <div class="fg"><label>Status</label>
+        <select id="jStatus">
+          <option value="received">📨 Received</option>
+          <option value="changed">🔄 Changed</option>
+          <option value="scheduled">📋 Scheduled</option>
+          <option value="inprogress">🔧 In Progress</option>
+          <option value="completed">✅ Completed</option>
+          <option value="cancelled">❌ Cancelled</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Location</label><input type="text" id="jLocation" placeholder="e.g. I-95 NB MM 42, Fairfax VA"></div>
+    <div class="fg"><label>Notes / Instructions</label><textarea id="jNotes" rows="2" placeholder="Special instructions, access details…" style="resize:vertical;"></textarea></div>
+    <div class="fg">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;text-transform:none;font-size:13px;font-weight:600;color:#b91c1c;">
+        <input type="checkbox" id="jSpecial" style="width:16px;height:16px;accent-color:#ef4444;">
+        🚨 Mark note as Special Instruction (displays in red)
+      </label>
+    </div>
+    <div class="fg"><label>Equipment</label>
+      <div class="extras-grid">
+        <label class="extra-item"><input type="checkbox" id="jArrowBoard"> Arrow Board</label>
+        <label class="extra-item"><input type="checkbox" id="jCones"> Cones</label>
+        <label class="extra-item"><input type="checkbox" id="jBarricades"> Barricades</label>
+        <label class="extra-item"><input type="checkbox" id="jSigns"> Signs</label>
+        <label class="extra-item"><input type="checkbox" id="jFlagger"> Flagger</label>
+        <label class="extra-item"><input type="checkbox" id="jPortableLight"> Portable Lights</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeJobModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveJob()">Save Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Status -->
+<div class="modal-overlay hidden" id="statusModal">
+  <div class="modal" style="max-width:380px;">
+    <h2>Change Status</h2>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:6px;" id="statusModalInfo"></p>
+    <div class="status-grid" id="statusGrid"></div>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeStatusModal()">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Driver Pick -->
+<div class="modal-overlay hidden" id="driverPickModal">
+  <div class="modal" style="max-width:460px;">
+    <h2>Assign Driver</h2>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:4px;" id="dPickInfo"></p>
+    <div id="dPickWarn" class="d-warn hidden"></div>
+    <div class="driver-grid" id="driverGrid"></div>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeDriverPick()">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Vehicle Pick -->
+<div class="modal-overlay hidden" id="vehiclePickModal">
+  <div class="modal" style="max-width:440px;">
+    <h2>Assign Vehicle</h2>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:6px;" id="vPickInfo"></p>
+    <div class="vpick-grid" id="vehiclePickGrid"></div>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeVehiclePick()">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Manage Drivers -->
+<div class="modal-overlay hidden" id="driversModal">
+  <div class="modal" style="max-width:460px;">
+    <h2>👷 Manage Drivers</h2>
+    <div class="sec-title">Current Drivers</div>
+    <div class="manage-list" id="driverManageList"></div>
+    <div class="form-row" style="margin-top:12px;">
+      <div class="fg"><label>Name</label><input type="text" id="newDriverName" placeholder="Full name"></div>
+      <div class="fg"><label>Color</label><input type="color" id="newDriverColor" value="#3a6bff"></div>
+    </div>
+    <button class="btn-primary" onclick="addDriver()" style="width:100%;">＋ Add Driver</button>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeManageDrivers()">Done</button></div>
+  </div>
+</div>
+
+<!-- Manage Clients -->
+<div class="modal-overlay hidden" id="clientsModal">
+  <div class="modal" style="max-width:480px;">
+    <h2>🏢 Manage Clients</h2>
+    <div class="sec-title">Current Clients</div>
+    <div class="manage-list" id="clientManageList"></div>
+    <div class="form-row" style="margin-top:12px;">
+      <div class="fg"><label>Client / Manager Name</label><input type="text" id="newClientName" placeholder="e.g. Hend – NoVA District"></div>
+      <div class="fg"><label>Contact Info</label><input type="text" id="newClientContact" placeholder="Phone or email"></div>
+    </div>
+    <button class="btn-primary" onclick="addClient()" style="width:100%;">＋ Add Client</button>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeManageClients()">Done</button></div>
+  </div>
+</div>
+
+<!-- Manage Vehicles -->
+<div class="modal-overlay hidden" id="vehiclesModal">
+  <div class="modal" style="max-width:520px;">
+    <h2>🚛 Manage Vehicles</h2>
+    <div class="sec-title">Fleet</div>
+    <div class="manage-list" id="vehicleManageList"></div>
+    <div class="form-row3" style="margin-top:12px;">
+      <div class="fg"><label>Vehicle ID / Name</label><input type="text" id="newVehicleName" placeholder="e.g. TMA-01"></div>
+      <div class="fg"><label>Type</label>
+        <select id="newVehicleType">
+          <option value="tma">🚛 TMA</option>
+          <option value="pickup">🛻 Pickup Truck</option>
+          <option value="van">🚐 Van</option>
+          <option value="other">🚗 Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Notes</label><input type="text" id="newVehicleNotes" placeholder="Year, color…"></div>
+    </div>
+    <button class="btn-primary" onclick="addVehicle()" style="width:100%;">＋ Add Vehicle</button>
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeManageVehicles()">Done</button></div>
+  </div>
+</div>
+
+<!-- Connection Manager -->
+<div class="modal-overlay hidden" id="connModal">
+  <div class="modal" style="max-width:420px;">
+    <h2>⚡ Connection Settings</h2>
+    <div id="connStatus" style="margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+    <div class="fg"><label>Supabase URL</label><input type="text" id="connUrl" style="font-size:12px;"></div>
+    <div class="fg"><label>Anon Key</label><input type="text" id="connKey" style="font-size:12px;word-break:break-all;"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeManageConn()">Cancel</button>
+      <button class="btn-primary" onclick="reconnect()">Reconnect</button>
+      <button class="btn-ghost" style="color:#dc2626;border-color:#dc2626;" onclick="resetConn()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════════════
+const TIME_SLOTS=['09:00','09:30','10:30','11:00','12:00','BREAK','13:30','14:00','15:00','15:30','16:00'];
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const VICONS={tma:'🚛',pickup:'🛻',van:'🚐',other:'🚗'};
+const STATUSES=[
+  {k:'received', label:'📨 Received',   bg:'#fefce8',border:'#ca8a04',tc:'#713f12'},
+  {k:'changed',  label:'🔄 Changed',    bg:'#f5f3ff',border:'#7c3aed',tc:'#3b0764'},
+  {k:'scheduled',label:'📋 Scheduled',  bg:'#eff6ff',border:'#2563eb',tc:'#1e3a8a'},
+  {k:'inprogress',label:'🔧 In Progress',bg:'#fff7ed',border:'#ea580c',tc:'#7c2d12'},
+  {k:'completed',label:'✅ Completed',  bg:'#f0fdf4',border:'#16a34a',tc:'#14532d'},
+  {k:'cancelled',label:'❌ Cancelled',  bg:'#fef2f2',border:'#dc2626',tc:'#7f1d1d'},
+];
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let sb = null; // supabase client
+let realtimeSub = null;
+let weekOffset=0;
+let jobs=[], drivers=[], clients=[], vehicles=[];
+let editJobId=null, dPickCtx=null, vPickCtx=null, statusJobId=null;
+let isSynced=false;
+
+// Default seed data
+const DEFAULT_DRIVERS=[
+  {id:'d1',name:'Luis Torr',color:'#6366f1'},{id:'d2',name:'Carlos',color:'#f97316'},
+  {id:'d3',name:'Roby',color:'#ec4899'},{id:'d4',name:'Elam',color:'#1a1d23'},
+  {id:'d5',name:'Choudary',color:'#eab308'},{id:'d6',name:'Kevin',color:'#14b8a6'},
+  {id:'d7',name:'Josue',color:'#8b5cf6'},{id:'d8',name:'Luis Esc',color:'#3b82f6'},
+  {id:'d9',name:'Gerber',color:'#22c55e'},{id:'d10',name:'Jared',color:'#ef4444'},
+];
+const DEFAULT_CLIENTS=[
+  {id:'c1',name:'Hend',contact:''},{id:'c2',name:'NoVA',contact:''},
+  {id:'c3',name:'Marcus',contact:''},{id:'c4',name:'Rivera',contact:''},
+];
+const DEFAULT_VEHICLES=[
+  {id:'v1',name:'TMA-01',type:'tma',notes:'2022 Black'},{id:'v2',name:'TMA-02',type:'tma',notes:'2021 White'},
+  {id:'v3',name:'TMA-03',type:'tma',notes:'2023 Yellow'},{id:'v4',name:'PU-01',type:'pickup',notes:'F-150 Red'},
+  {id:'v5',name:'PU-02',type:'pickup',notes:'F-250 Blue'},{id:'v6',name:'VAN-01',type:'van',notes:'Transit White'},
+];
+
+// ══════════════════════════════════════════════════
+// LOCAL STORAGE HELPERS (offline cache)
+// ══════════════════════════════════════════════════
+function lsGet(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+// ══════════════════════════════════════════════════
+// INIT — check for saved credentials
+// ══════════════════════════════════════════════════
+(function init(){
+  const url=lsGet('vrs_sb_url','');
+  const key=lsGet('vrs_sb_key','');
+  if(url&&key){
+    document.getElementById('mainApp').classList.remove('hidden');
+    // Load from local cache immediately so UI isn't blank
+    jobs=lsGet('vrs_jobs',[]);
+    drivers=lsGet('vrs_drivers',DEFAULT_DRIVERS);
+    clients=lsGet('vrs_clients',DEFAULT_CLIENTS);
+    vehicles=lsGet('vrs_vehicles',DEFAULT_VEHICLES);
+    render();
+    initSupabase(url,key);
+  } else {
+    document.getElementById('setupScreen').classList.remove('hidden');
+  }
+})();
+
+// ══════════════════════════════════════════════════
+// SUPABASE INIT & REALTIME
+// ══════════════════════════════════════════════════
+function toggleSetupHelp(){
+  const el=document.getElementById('setupHelp');
+  const arrow=document.getElementById('setupHelpArrow');
+  const isHidden=el.style.display===''||el.style.display==='none';
+  el.style.display=isHidden?'block':'none';
+  arrow.textContent=isHidden?'▼':'▶';
+}
+
+async function connectSupabase(){
+  const url=document.getElementById('setupUrl').value.trim();
+  const key=document.getElementById('setupKey').value.trim();
+  const errEl=document.getElementById('setupError');
+  errEl.classList.add('hidden');
+  if(!url||!key){errEl.textContent='Please enter both the URL and key.';errEl.classList.remove('hidden');return;}
+  if(!url.startsWith('https://')){errEl.textContent='URL must start with https://';errEl.classList.remove('hidden');return;}
+
+  lsSet('vrs_sb_url',url); lsSet('vrs_sb_key',key);
+  document.getElementById('setupScreen').classList.add('hidden');
+  document.getElementById('mainApp').classList.remove('hidden');
+  jobs=lsGet('vrs_jobs',[]); drivers=lsGet('vrs_drivers',DEFAULT_DRIVERS);
+  clients=lsGet('vrs_clients',DEFAULT_CLIENTS); vehicles=lsGet('vrs_vehicles',DEFAULT_VEHICLES);
+  render();
+  await initSupabase(url,key);
+}
+
+async function initSupabase(url,key){
+  setSyncStatus('pending','Connecting…');
+  try{
+    sb = supabase.createClient(url,key);
+    await loadFromSupabase();
+    subscribeRealtime();
+    setSyncStatus('ok','Live ✓');
+    isSynced=true;
+  } catch(e){
+    console.error('Supabase init error',e);
+    setSyncStatus('err','Offline — local only');
+    showToast('Could not connect to Supabase. Working offline.','error');
+  }
+}
+
+async function loadFromSupabase(){
+  // Load config (drivers, clients, vehicles)
+  const {data:configRows,error:ce}=await sb.from('config').select('*');
+  if(ce) throw ce;
+  const cfgMap={};
+  (configRows||[]).forEach(r=>cfgMap[r.key]=r.data);
+
+  if(cfgMap.drivers) drivers=cfgMap.drivers;
+  else await pushConfig('drivers',DEFAULT_DRIVERS).then(()=>drivers=DEFAULT_DRIVERS);
+
+  if(cfgMap.clients) clients=cfgMap.clients;
+  else await pushConfig('clients',DEFAULT_CLIENTS).then(()=>clients=DEFAULT_CLIENTS);
+
+  if(cfgMap.vehicles) vehicles=cfgMap.vehicles;
+  else await pushConfig('vehicles',DEFAULT_VEHICLES).then(()=>vehicles=DEFAULT_VEHICLES);
+
+  // Load jobs
+  const {data:jobRows,error:je}=await sb.from('jobs').select('*');
+  if(je) throw je;
+  jobs=(jobRows||[]).map(r=>r.data);
+
+  // Cache locally
+  lsSet('vrs_jobs',jobs); lsSet('vrs_drivers',drivers);
+  lsSet('vrs_clients',clients); lsSet('vrs_vehicles',vehicles);
+  render();
+}
+
+function subscribeRealtime(){
+  if(realtimeSub){sb.removeChannel(realtimeSub);}
+  realtimeSub=sb.channel('db-changes')
+    .on('postgres_changes',{event:'*',schema:'public',table:'jobs'},handleJobChange)
+    .on('postgres_changes',{event:'*',schema:'public',table:'config'},handleConfigChange)
+    .subscribe(status=>{
+      if(status==='SUBSCRIBED'){setSyncStatus('ok','Live ✓');}
+      else if(status==='CLOSED'||status==='CHANNEL_ERROR'){setSyncStatus('err','Disconnected');}
+    });
+}
+
+function handleJobChange(payload){
+  const {eventType,new:row,old}=payload;
+  if(eventType==='INSERT'||eventType==='UPDATE'){
+    const j=row.data;
+    const idx=jobs.findIndex(x=>x.id===j.id);
+    if(idx>=0) jobs[idx]=j; else jobs.push(j);
+  } else if(eventType==='DELETE'){
+    jobs=jobs.filter(j=>j.id!==old.id);
+  }
+  lsSet('vrs_jobs',jobs);
+  render();
+  showToast('Schedule updated by another user','info',2500);
+}
+
+function handleConfigChange(payload){
+  const {eventType,new:row}=payload;
+  if(eventType==='INSERT'||eventType==='UPDATE'){
+    if(row.key==='drivers'){drivers=row.data;lsSet('vrs_drivers',drivers);}
+    if(row.key==='clients'){clients=row.data;lsSet('vrs_clients',clients);}
+    if(row.key==='vehicles'){vehicles=row.data;lsSet('vrs_vehicles',vehicles);}
+    render();
+  }
+}
+
+// ══════════════════════════════════════════════════
+// SYNC HELPERS
+// ══════════════════════════════════════════════════
+async function pushJob(job){
+  lsSet('vrs_jobs',jobs); // always update local cache
+  if(!sb){return;}
+  setSyncStatus('pending','Saving…');
+  try{
+    await sb.from('jobs').upsert({id:job.id,data:job,updated_at:new Date().toISOString()});
+    setSyncStatus('ok','Live ✓');
+  }catch(e){
+    console.error('pushJob error',e);
+    setSyncStatus('err','Save failed');
+    showToast('Failed to sync — check connection','error');
+  }
+}
+
+async function deleteJobRemote(id){
+  lsSet('vrs_jobs',jobs);
+  if(!sb){return;}
+  setSyncStatus('pending','Saving…');
+  try{
+    await sb.from('jobs').delete().eq('id',id);
+    setSyncStatus('ok','Live ✓');
+  }catch(e){console.error('deleteJob error',e);setSyncStatus('err','Delete failed');}
+}
+
+async function pushConfig(key,data){
+  lsSet('vrs_'+key,data);
+  if(!sb){return;}
+  try{
+    await sb.from('config').upsert({key,data,updated_at:new Date().toISOString()});
+  }catch(e){console.error('pushConfig error',e);}
+}
+
+// ══════════════════════════════════════════════════
+// SYNC STATUS UI
+// ══════════════════════════════════════════════════
+function setSyncStatus(state,label){
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLabel');
+  if(!dot||!lbl)return;
+  dot.className='sync-dot '+state;
+  lbl.textContent=label;
+}
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+let toastTimer=null;
+function showToast(msg,type='success',dur=3000){
+  const t=document.getElementById('toast');
+  const icons={success:'✓',error:'✕',info:'↻'};
+  t.innerHTML=`<span>${icons[type]||'•'}</span> ${msg}`;
+  t.className='toast '+type+' show';
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),dur);
+}
+
+// ══════════════════════════════════════════════════
+// CONNECTION MANAGER MODAL
+// ══════════════════════════════════════════════════
+function openManageConn(){
+  document.getElementById('connUrl').value=lsGet('vrs_sb_url','');
+  document.getElementById('connKey').value=lsGet('vrs_sb_key','');
+  const st=document.getElementById('connStatus');
+  const dot=document.getElementById('syncDot');
+  const ok=dot&&dot.classList.contains('ok');
+  st.style.cssText=ok?'background:#f0fdf4;color:#14532d;border:1px solid #16a34a;':'background:#fef2f2;color:#7f1d1d;border:1px solid #dc2626;';
+  st.textContent=ok?'🟢 Connected and syncing live':'🔴 Not connected — changes are local only';
+  document.getElementById('connModal').classList.remove('hidden');
+}
+function closeManageConn(){document.getElementById('connModal').classList.add('hidden');}
+async function reconnect(){
+  const url=document.getElementById('connUrl').value.trim();
+  const key=document.getElementById('connKey').value.trim();
+  lsSet('vrs_sb_url',url); lsSet('vrs_sb_key',key);
+  closeManageConn();
+  await initSupabase(url,key);
+  showToast('Reconnecting…','info');
+}
+function resetConn(){
+  if(!confirm('Disconnect from Supabase? The app will work offline only.'))return;
+  lsSet('vrs_sb_url',''); lsSet('vrs_sb_key','');
+  sb=null; realtimeSub=null;
+  setSyncStatus('offline','Offline');
+  closeManageConn();
+  showToast('Disconnected. Working offline.','info');
+}
+
+// ══════════════════════════════════════════════════
+// VIEW SWITCHING
+// ══════════════════════════════════════════════════
+function switchView(v){
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.querySelector(`.nav-tab[onclick="switchView('${v}')"]`).classList.add('active');
+  if(v==='summary')renderSummary();
+}
+
+// ══════════════════════════════════════════════════
+// WEEK HELPERS
+// ══════════════════════════════════════════════════
+function getWeekStart(off=0){
+  const n=new Date(),d=n.getDay(),sun=new Date(n.setDate(n.getDate()-d));
+  sun.setDate(sun.getDate()+off*7);sun.setHours(0,0,0,0);return sun;
+}
+function getWeekDays(off=0){
+  const s=getWeekStart(off);
+  return Array.from({length:7},(_,i)=>{const d=new Date(s);d.setDate(d.getDate()+i);return d;});
+}
+function fmtDate(d){return d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});}
+function isToday(d){const n=new Date();return d.getDate()===n.getDate()&&d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();}
+
+// ══════════════════════════════════════════════════
+// CONSECUTIVE SHIFT LOGIC
+// ══════════════════════════════════════════════════
+function getConsecutive(driverId,targetDay,targetTime){
+  const isAM=t=>t<'12:30';
+  const tp=isAM(targetTime)?'AM':'PM';
+  const worked=new Set();
+  jobs.forEach(j=>{
+    if(!(j.drivers||[]).includes(driverId))return;
+    worked.add(j.day+'_'+(isAM(j.time)?'AM':'PM'));
+  });
+  const allDays=[...new Set([...jobs.map(j=>j.day),targetDay])].sort();
+  const timeline=[];
+  const cur=new Date(allDays[0]);
+  const end=new Date(allDays[allDays.length-1]);end.setDate(end.getDate()+1);
+  while(cur<=end){const ds=cur.toISOString().slice(0,10);timeline.push(ds+'_AM',ds+'_PM');cur.setDate(cur.getDate()+1);}
+  const tk=targetDay+'_'+tp;
+  const tIdx=timeline.indexOf(tk);
+  if(tIdx<=0)return 0;
+  let count=0;
+  for(let i=tIdx-1;i>=0;i--){if(worked.has(timeline[i]))count++;else break;}
+  return count;
+}
+function consecLabel(n){
+  if(n<=0)return null;
+  const ord=n+1,s=ord===2?'nd':ord===3?'rd':'th';
+  const cls=n===1?'consec-1':n===2?'consec-2':'consec-3';
+  return{text:`${ord}${s} consecutive shift${n>=2?' — fatigue risk':''}`,cls};
+}
+
+// ══════════════════════════════════════════════════
+// RENDER CALENDAR
+// ══════════════════════════════════════════════════
+function render(){
+  const days=getWeekDays(weekOffset);
+  document.getElementById('weekLabel').textContent=`${fmtDate(days[0])} – ${fmtDate(days[6])}`;
+  const hdr=document.getElementById('calHeader');
+  hdr.innerHTML=`<div class="cal-header-cell" style="font-size:10px;">Time</div>`;
+  days.forEach(d=>{
+    const t=isToday(d);
+    hdr.innerHTML+=`<div class="cal-header-cell${t?' today':''}">${DAYS[d.getDay()]}<br><span style="font-size:17px;">${d.getDate()}</span></div>`;
+  });
+  const body=document.getElementById('calBody');body.innerHTML='';
+  TIME_SLOTS.forEach(slot=>{
+    const row=document.createElement('div');
+    row.className='time-row'+(slot==='BREAK'?' break-row':'');
+    if(slot==='BREAK'){
+      row.innerHTML=`<div class="time-label">12:30–13:30</div>`;
+      days.forEach(()=>row.innerHTML+=`<div class="day-cell"><span class="break-label">Lunch Break</span></div>`);
+    } else {
+      row.innerHTML=`<div class="time-label">${slot}</div>`;
+      days.forEach(d=>{
+        const ds=d.toISOString().slice(0,10);
+        const cell=document.createElement('div');
+        cell.className='day-cell';cell.dataset.day=ds;cell.dataset.time=slot;
+        setupDrop(cell);
+        jobs.filter(j=>j.day===ds&&j.time===slot).forEach(j=>cell.appendChild(buildCard(j)));
+        const btn=document.createElement('button');
+        btn.className='add-job-btn';btn.textContent='＋ Add Job';btn.onclick=()=>openAddJob(ds,slot);
+        cell.appendChild(btn);
+        row.appendChild(cell);
+      });
+    }
+    body.appendChild(row);
+  });
+  renderLegend();
+}
+
+function buildCard(job){
+  const st=job.status||'received';
+  const si=STATUSES.find(s=>s.k===st)||STATUSES[0];
+  const wrap=document.createElement('div');
+  wrap.className=`job-card s-${st}`;wrap.draggable=true;
+  setupDrag(wrap,job.id);
+  const extras=[];
+  if(job.arrowBoard)extras.push('AB');if(job.cones)extras.push('Cones');
+  if(job.barricades)extras.push('Barr.');if(job.signs)extras.push('Signs');
+  if(job.flagger)extras.push('Flagger');if(job.portableLight)extras.push('Lights');
+  wrap.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+      <span class="status-badge" style="background:${si.bg};color:${si.tc};border:1px solid ${si.border};">${si.label}</span>
+      <span style="font-size:9px;color:var(--muted);">${job.time}</span>
+    </div>
+    <div class="job-hdr">${job.manager||''}${job.manager&&job.location?' — ':''}${job.location||''}</div>
+    <div class="job-info">${job.type||'Job'}${job.tmas>0?` <span style="font-size:9px;font-weight:400;color:var(--muted);">${job.tmas}TMA</span>`:''}${job.personnel>0?` <span style="font-size:9px;font-weight:400;color:var(--muted);">${job.personnel}pax</span>`:''}</div>
+    ${job.specialInstruction&&job.notes?`<div class="special-note">🚨 ${job.notes}</div>`:(!job.specialInstruction&&job.notes?`<div style="font-size:10px;color:var(--muted);margin-bottom:2px;">${job.notes}</div>`:'')}
+    ${extras.length?`<div style="margin-bottom:2px;">${extras.map(e=>`<span class="tag">${e}</span>`).join('')}</div>`:''}
+    <div class="driver-slots" id="ds_${job.id}"></div>
+    <div class="vehicle-slots" id="vs_${job.id}"></div>
+    <div class="card-actions">
+      <button class="btn-ic" title="Status" onclick="openStatusModal('${job.id}')">🔁</button>
+      <button class="btn-ic" title="Edit" onclick="openEditJob('${job.id}')">✏️</button>
+      <button class="btn-ic" title="Delete" onclick="deleteJob('${job.id}')">🗑️</button>
+    </div>`;
+  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+  const dEl=wrap.querySelector(`#ds_${job.id}`);
+  const vEl=wrap.querySelector(`#vs_${job.id}`);
+  for(let i=0;i<sc;i++){
+    const dId=(job.drivers||[])[i];
+    const drv=drivers.find(d=>d.id===dId);
+    const ds=document.createElement('div');
+    ds.className='d-slot'+(drv?' assigned':'');
+    ds.textContent=drv?shortName(drv.name):`D${i+1}`;
+    if(drv){ds.style.background=drv.color;ds.style.borderColor=drv.color;}
+    if(drv&&dDayCount(drv.id,job.day)>=2){const w=document.createElement('span');w.className='warn-dot';ds.appendChild(w);}
+    ds.title=drv?`${drv.name} — click to reassign`:'Assign driver';
+    ds.onclick=()=>openDriverPick(job.id,i);
+    dEl.appendChild(ds);
+    const vId=(job.vehicles||[])[i];
+    const veh=vehicles.find(v=>v.id===vId);
+    const vs=document.createElement('div');
+    vs.className='v-slot'+(veh?' assigned':'');
+    vs.textContent=veh?`${VICONS[veh.type]||'🚗'}${veh.name}`:`V${i+1}`;
+    vs.title=veh?`${veh.name} — click to reassign`:'Assign vehicle';
+    vs.onclick=()=>openVehiclePick(job.id,i);
+    vEl.appendChild(vs);
+  }
+  return wrap;
+}
+
+function shortName(n){const p=n.split(' ');return p.length>=2?p[0].substring(0,5)+' '+p[1][0]+'.':n.substring(0,7);}
+function dDayCount(dId,day){return jobs.filter(j=>j.day===day&&(j.drivers||[]).includes(dId)).length;}
+function renderLegend(){
+  document.getElementById('driverLegend').innerHTML=drivers.map(d=>`
+    <div class="legend-item"><div class="legend-dot" style="background:${d.color}"></div><span>${d.name}</span></div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// DRAG & DROP
+// ══════════════════════════════════════════════════
+let dragId=null;
+function setupDrag(el,id){
+  el.addEventListener('dragstart',e=>{dragId=id;el.classList.add('dragging');e.dataTransfer.setData('text/plain',id);e.stopPropagation();});
+  el.addEventListener('dragend',()=>{el.classList.remove('dragging');dragId=null;});
+}
+function setupDrop(cell){
+  cell.addEventListener('dragover',e=>{if(!dragId)return;e.preventDefault();cell.classList.add('drag-over');});
+  cell.addEventListener('dragleave',()=>cell.classList.remove('drag-over'));
+  cell.addEventListener('drop',e=>{
+    e.preventDefault();cell.classList.remove('drag-over');
+    const id=e.dataTransfer.getData('text/plain')||dragId;
+    if(!id||!cell.dataset.day)return;
+    const j=jobs.find(j=>j.id===id);
+    if(j){j.day=cell.dataset.day;j.time=cell.dataset.time;pushJob(j);render();}
+  });
+}
+
+// ══════════════════════════════════════════════════
+// WEEK NAV
+// ══════════════════════════════════════════════════
+function changeWeek(d){weekOffset+=d;render();}
+function goToday(){weekOffset=0;render();}
+
+// ══════════════════════════════════════════════════
+// JOB FORM
+// ══════════════════════════════════════════════════
+function fillDays(sel){
+  const days=getWeekDays(weekOffset);
+  document.getElementById('jDay').innerHTML=days.map(d=>{
+    const v=d.toISOString().slice(0,10);
+    return `<option value="${v}"${v===sel?' selected':''}>${DAYS[d.getDay()]} ${d.getDate()}</option>`;
+  }).join('');
+}
+function fillManagers(val){
+  document.getElementById('jManager').innerHTML=`<option value="">Select…</option>`+
+    clients.map(c=>`<option value="${c.name}"${c.name===val?' selected':''}>${c.name}</option>`).join('');
+}
+function openAddJobGlobal(){
+  const days=getWeekDays(weekOffset);
+  const ts=new Date().toISOString().slice(0,10);
+  openAddJob(days.find(d=>d.toISOString().slice(0,10)===ts)?ts:days[0].toISOString().slice(0,10),'09:00');
+}
+function openAddJob(day,time){
+  editJobId=null;
+  document.getElementById('jobModalTitle').textContent='Add New Job';
+  document.getElementById('jobModalError').classList.add('hidden');
+  fillDays(day);fillManagers('');
+  document.getElementById('jTime').value=time||'09:00';
+  document.getElementById('jType').value='';
+  document.getElementById('jTMAs').value=1;
+  document.getElementById('jPersonnel').value=1;
+  document.getElementById('jStatus').value='received';
+  document.getElementById('jLocation').value='';
+  document.getElementById('jNotes').value='';
+  document.getElementById('jSpecial').checked=false;
+  ['jArrowBoard','jCones','jBarricades','jSigns','jFlagger','jPortableLight'].forEach(id=>document.getElementById(id).checked=false);
+  document.getElementById('jobModal').classList.remove('hidden');
+}
+function openEditJob(id){
+  const j=jobs.find(j=>j.id===id);if(!j)return;
+  editJobId=id;
+  document.getElementById('jobModalTitle').textContent='Edit Job';
+  document.getElementById('jobModalError').classList.add('hidden');
+  fillDays(j.day);fillManagers(j.manager||'');
+  document.getElementById('jTime').value=j.time;
+  document.getElementById('jType').value=j.type||'';
+  document.getElementById('jTMAs').value=j.tmas??1;
+  document.getElementById('jPersonnel').value=j.personnel??1;
+  document.getElementById('jStatus').value=j.status||'received';
+  document.getElementById('jLocation').value=j.location||'';
+  document.getElementById('jNotes').value=j.notes||'';
+  document.getElementById('jSpecial').checked=!!j.specialInstruction;
+  document.getElementById('jArrowBoard').checked=!!j.arrowBoard;
+  document.getElementById('jCones').checked=!!j.cones;
+  document.getElementById('jBarricades').checked=!!j.barricades;
+  document.getElementById('jSigns').checked=!!j.signs;
+  document.getElementById('jFlagger').checked=!!j.flagger;
+  document.getElementById('jPortableLight').checked=!!j.portableLight;
+  document.getElementById('jobModal').classList.remove('hidden');
+}
+function closeJobModal(){document.getElementById('jobModal').classList.add('hidden');}
+function saveJob(){
+  const err=document.getElementById('jobModalError');err.classList.add('hidden');
+  const day=document.getElementById('jDay').value;
+  const time=document.getElementById('jTime').value;
+  if(!day||!time){err.textContent='Please select a day and time.';err.classList.remove('hidden');return;}
+  const tmas=parseInt(document.getElementById('jTMAs').value)||0;
+  const personnel=parseInt(document.getElementById('jPersonnel').value)||1;
+  const data={day,time,
+    manager:document.getElementById('jManager').value,
+    type:document.getElementById('jType').value,
+    tmas,personnel,status:document.getElementById('jStatus').value||'received',
+    location:document.getElementById('jLocation').value.trim(),
+    notes:document.getElementById('jNotes').value.trim(),
+    specialInstruction:document.getElementById('jSpecial').checked,
+    arrowBoard:document.getElementById('jArrowBoard').checked,cones:document.getElementById('jCones').checked,
+    barricades:document.getElementById('jBarricades').checked,signs:document.getElementById('jSigns').checked,
+    flagger:document.getElementById('jFlagger').checked,portableLight:document.getElementById('jPortableLight').checked,
+  };
+  if(editJobId){
+    const idx=jobs.findIndex(j=>j.id===editJobId);const ex=jobs[idx];
+    const sc=Math.max(personnel,tmas,1);
+    const updated={...ex,...data,drivers:(ex.drivers||[]).slice(0,sc),vehicles:(ex.vehicles||[]).slice(0,sc)};
+    jobs[idx]=updated;pushJob(updated);
+  } else {
+    const newJob={id:'j'+Date.now(),...data,drivers:[],vehicles:[]};
+    jobs.push(newJob);pushJob(newJob);
+  }
+  closeJobModal();render();showToast('Job saved','success');
+}
+function deleteJob(id){
+  if(!confirm('Delete this job?'))return;
+  jobs=jobs.filter(j=>j.id!==id);
+  deleteJobRemote(id);render();showToast('Job deleted','success');
+}
+
+// ══════════════════════════════════════════════════
+// STATUS MODAL
+// ══════════════════════════════════════════════════
+function openStatusModal(id){
+  statusJobId=id;
+  const j=jobs.find(j=>j.id===id);
+  document.getElementById('statusModalInfo').textContent=`${j.type||'Job'} — ${j.day} ${j.time}`;
+  const grid=document.getElementById('statusGrid');grid.innerHTML='';
+  STATUSES.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='s-opt'+(j.status===s.k?' selected':'');
+    div.style.cssText=`background:${s.bg};border-color:${s.border};color:${s.tc};`;
+    div.textContent=s.label;
+    div.onclick=()=>{
+      const j2=jobs.find(j=>j.id===statusJobId);
+      if(j2){j2.status=s.k;pushJob(j2);render();}
+      closeStatusModal();showToast(`Status → ${s.label}`,'success');
+    };
+    grid.appendChild(div);
+  });
+  document.getElementById('statusModal').classList.remove('hidden');
+}
+function closeStatusModal(){document.getElementById('statusModal').classList.add('hidden');}
+
+// ══════════════════════════════════════════════════
+// DRIVER PICK
+// ══════════════════════════════════════════════════
+function openDriverPick(jobId,slotIdx){
+  dPickCtx={jobId,slotIdx};
+  const job=jobs.find(j=>j.id===jobId);
+  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+  document.getElementById('dPickInfo').textContent=`Slot ${slotIdx+1} of ${sc} — ${job.type||'Job'} (${job.day})`;
+  document.getElementById('dPickWarn').classList.add('hidden');
+  const grid=document.getElementById('driverGrid');grid.innerHTML='';
+  drivers.forEach(d=>{
+    const dc=dDayCount(d.id,job.day);
+    const consec=getConsecutive(d.id,job.day,job.time);
+    const cur=(job.drivers||[])[slotIdx]===d.id;
+    const div=document.createElement('div');
+    div.className='d-opt'+(cur?' selected':'');
+    div.style.background=d.color;
+    const cl=consecLabel(consec);
+    div.innerHTML=`${d.name}${dc>0?`<br><span style="font-size:10px;opacity:.8">${dc} job${dc>1?'s':''} today</span>`:''}${cl?`<br><span class="consec ${cl.cls}">${cl.text}</span>`:''}`;
+    if(dc>=2)div.style.opacity='0.55';
+    div.onclick=()=>assignDriver(d.id);
+    grid.appendChild(div);
+  });
+  const u=document.createElement('div');
+  u.className='d-opt unassign';u.innerHTML='✕<br><span style="font-size:11px;">Unassign</span>';
+  u.onclick=()=>assignDriver(null);grid.appendChild(u);
+  document.getElementById('driverPickModal').classList.remove('hidden');
+}
+function assignDriver(dId){
+  const {jobId,slotIdx}=dPickCtx;
+  const job=jobs.find(j=>j.id===jobId);
+  if(!job.drivers)job.drivers=[];
+  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+  while(job.drivers.length<sc)job.drivers.push(null);
+  if(dId&&job.drivers.includes(dId)&&job.drivers.indexOf(dId)!==slotIdx){
+    const w=document.getElementById('dPickWarn');
+    w.textContent=drivers.find(d=>d.id===dId)?.name+' is already in another slot of this job.';
+    w.classList.remove('hidden');return;
+  }
+  if(dId){
+    const cnt=dDayCount(dId,job.day);
+    if(!job.drivers.includes(dId)&&cnt>=2){
+      if(!confirm(drivers.find(d=>d.id===dId)?.name+` already has ${cnt} jobs today. Assign anyway?`))return;
+    }
+  }
+  job.drivers[slotIdx]=dId||null;
+  pushJob(job);closeDriverPick();render();
+}
+function closeDriverPick(){document.getElementById('driverPickModal').classList.add('hidden');}
+
+// ══════════════════════════════════════════════════
+// VEHICLE PICK
+// ══════════════════════════════════════════════════
+function openVehiclePick(jobId,slotIdx){
+  vPickCtx={jobId,slotIdx};
+  const job=jobs.find(j=>j.id===jobId);
+  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+  document.getElementById('vPickInfo').textContent=`Vehicle Slot ${slotIdx+1} of ${sc} — ${job.type||'Job'}`;
+  const grid=document.getElementById('vehiclePickGrid');grid.innerHTML='';
+  const cur=(job.vehicles||[])[slotIdx];
+  vehicles.forEach(v=>{
+    const inUse=jobs.some(j=>j.id!==jobId&&j.day===job.day&&(j.vehicles||[]).includes(v.id));
+    const isC=cur===v.id;
+    const div=document.createElement('div');
+    div.className='vpick-item'+(isC?' selected':'');
+    div.innerHTML=`<span style="font-size:18px;">${VICONS[v.type]||'🚗'}</span>
+      <div><div style="font-weight:700;font-size:12px;">${v.name} <span class="vtbadge">${v.type.toUpperCase()}</span></div>
+      <div style="font-size:11px;color:var(--muted);">${v.notes||''}${inUse&&!isC?' <span style="color:#dc2626;">⚠ In use today</span>':''}</div></div>`;
+    if(inUse&&!isC)div.style.opacity='0.55';
+    div.onclick=()=>assignVehicle(v.id);
+    grid.appendChild(div);
+  });
+  const u=document.createElement('div');
+  u.className='vpick-item';u.style.color='var(--muted)';
+  u.innerHTML=`<span>✕</span><span>Unassign</span>`;u.onclick=()=>assignVehicle(null);grid.appendChild(u);
+  document.getElementById('vehiclePickModal').classList.remove('hidden');
+}
+function assignVehicle(vId){
+  const {jobId,slotIdx}=vPickCtx;
+  const job=jobs.find(j=>j.id===jobId);
+  if(!job.vehicles)job.vehicles=[];
+  const sc=Math.max(job.personnel||1,job.tmas||0,1);
+  while(job.vehicles.length<sc)job.vehicles.push(null);
+  job.vehicles[slotIdx]=vId||null;
+  pushJob(job);closeVehiclePick();render();
+}
+function closeVehiclePick(){document.getElementById('vehiclePickModal').classList.add('hidden');}
+
+// ══════════════════════════════════════════════════
+// MANAGE DRIVERS
+// ══════════════════════════════════════════════════
+function openManageDrivers(){renderDList();document.getElementById('driversModal').classList.remove('hidden');}
+function closeManageDrivers(){document.getElementById('driversModal').classList.add('hidden');render();}
+function renderDList(){
+  document.getElementById('driverManageList').innerHTML=drivers.map(d=>{
+    const c=jobs.filter(j=>(j.drivers||[]).includes(d.id)).length;
+    return `<div class="mi"><input type="color" value="${d.color}" onchange="updateDColor('${d.id}',this.value)" style="width:28px;height:26px;">
+      <span class="mi-name">${d.name}</span><span class="mi-sub">${c} job${c!==1?'s':''}</span>
+      <button class="btn-ic" onclick="removeDriver('${d.id}')">🗑️</button></div>`;
+  }).join('');
+}
+function addDriver(){
+  const name=document.getElementById('newDriverName').value.trim();
+  const color=document.getElementById('newDriverColor').value;
+  if(!name){alert('Enter a name.');return;}
+  if(drivers.find(d=>d.name.toLowerCase()===name.toLowerCase())){alert('Already exists.');return;}
+  drivers.push({id:'d'+Date.now(),name,color});
+  document.getElementById('newDriverName').value='';
+  pushConfig('drivers',drivers);renderDList();render();
+}
+function removeDriver(id){
+  if(!confirm('Remove driver? Their assignments will be cleared.'))return;
+  drivers=drivers.filter(d=>d.id!==id);
+  jobs.forEach(j=>{if(j.drivers)j.drivers=j.drivers.map(did=>did===id?null:did);});
+  jobs.forEach(j=>pushJob(j));
+  pushConfig('drivers',drivers);renderDList();render();
+}
+function updateDColor(id,color){
+  const d=drivers.find(d=>d.id===id);if(d){d.color=color;pushConfig('drivers',drivers);}
+}
+
+// ══════════════════════════════════════════════════
+// MANAGE CLIENTS
+// ══════════════════════════════════════════════════
+function openManageClients(){renderCList();document.getElementById('clientsModal').classList.remove('hidden');}
+function closeManageClients(){document.getElementById('clientsModal').classList.add('hidden');render();}
+function renderCList(){
+  document.getElementById('clientManageList').innerHTML=clients.map(c=>{
+    const cnt=jobs.filter(j=>j.manager===c.name).length;
+    return `<div class="mi"><span style="font-size:18px;">🏢</span>
+      <div style="flex:1;"><div class="mi-name">${c.name}</div>${c.contact?`<div class="mi-sub">${c.contact}</div>`:''}</div>
+      <span class="mi-sub">${cnt} job${cnt!==1?'s':''}</span>
+      <button class="btn-ic" onclick="removeClient('${c.id}')">🗑️</button></div>`;
+  }).join('');
+}
+function addClient(){
+  const name=document.getElementById('newClientName').value.trim();
+  const contact=document.getElementById('newClientContact').value.trim();
+  if(!name){alert('Enter a client name.');return;}
+  if(clients.find(c=>c.name.toLowerCase()===name.toLowerCase())){alert('Already exists.');return;}
+  clients.push({id:'c'+Date.now(),name,contact});
+  document.getElementById('newClientName').value='';document.getElementById('newClientContact').value='';
+  pushConfig('clients',clients);renderCList();
+}
+function removeClient(id){
+  if(!confirm('Remove client?'))return;
+  clients=clients.filter(c=>c.id!==id);
+  pushConfig('clients',clients);renderCList();
+}
+
+// ══════════════════════════════════════════════════
+// MANAGE VEHICLES
+// ══════════════════════════════════════════════════
+function openManageVehicles(){renderVList();document.getElementById('vehiclesModal').classList.remove('hidden');}
+function closeManageVehicles(){document.getElementById('vehiclesModal').classList.add('hidden');render();}
+function renderVList(){
+  document.getElementById('vehicleManageList').innerHTML=vehicles.map(v=>{
+    const c=jobs.filter(j=>(j.vehicles||[]).includes(v.id)).length;
+    return `<div class="mi"><span style="font-size:18px;">${VICONS[v.type]||'🚗'}</span>
+      <div style="flex:1;"><div class="mi-name">${v.name} <span class="vtbadge">${v.type.toUpperCase()}</span></div>
+      ${v.notes?`<div class="mi-sub">${v.notes}</div>`:''}</div>
+      <span class="mi-sub">${c} use${c!==1?'s':''}</span>
+      <button class="btn-ic" onclick="removeVehicle('${v.id}')">🗑️</button></div>`;
+  }).join('');
+}
+function addVehicle(){
+  const name=document.getElementById('newVehicleName').value.trim();
+  const type=document.getElementById('newVehicleType').value;
+  const notes=document.getElementById('newVehicleNotes').value.trim();
+  if(!name){alert('Enter a vehicle name.');return;}
+  vehicles.push({id:'v'+Date.now(),name,type,notes});
+  document.getElementById('newVehicleName').value='';document.getElementById('newVehicleNotes').value='';
+  pushConfig('vehicles',vehicles);renderVList();
+}
+function removeVehicle(id){
+  if(!confirm('Remove vehicle?'))return;
+  vehicles=vehicles.filter(v=>v.id!==id);
+  jobs.forEach(j=>{if(j.vehicles)j.vehicles=j.vehicles.map(vid=>vid===id?null:vid);});
+  jobs.forEach(j=>pushJob(j));
+  pushConfig('vehicles',vehicles);renderVList();render();
+}
+
+// ══════════════════════════════════════════════════
+// SUMMARY
+// ══════════════════════════════════════════════════
+let charts={};
+function renderSummary(){
+  const years=[...new Set(jobs.map(j=>j.day.slice(0,4)))].sort();
+  const ySel=document.getElementById('sumYear'),mSel=document.getElementById('sumMonth');
+  const yCur=ySel.value,mCur=mSel.value;
+  ySel.innerHTML=`<option value="">All Time</option>`+years.map(y=>`<option value="${y}"${y===yCur?' selected':''}>${y}</option>`).join('');
+  mSel.innerHTML=`<option value="">All Months</option>`+MONTHS.map((m,i)=>`<option value="${String(i+1).padStart(2,'0')}"${String(i+1).padStart(2,'0')===mCur?' selected':''}>${m}</option>`).join('');
+  const fy=ySel.value,fm=mSel.value;
+  const data=jobs.filter(j=>{if(fy&&!j.day.startsWith(fy))return false;if(fm&&j.day.slice(5,7)!==fm)return false;return true;});
+  const done=data.filter(j=>j.status==='completed').length;
+  const pax=data.reduce((a,j)=>a+(j.personnel||1),0);
+  const uc=new Set(data.map(j=>j.manager).filter(Boolean)).size;
+  document.getElementById('kpiGrid').innerHTML=`
+    <div class="kpi-card"><div class="kpi-num">${data.length}</div><div class="kpi-label">Total Jobs</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="color:#16a34a;">${done}</div><div class="kpi-label">Completed</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="color:#ea580c;">${pax}</div><div class="kpi-label">Personnel Deployed</div></div>
+    <div class="kpi-card"><div class="kpi-num" style="color:#7c3aed;">${uc}</div><div class="kpi-label">Active Clients</div></div>`;
+  Object.values(charts).forEach(c=>{try{c.destroy();}catch(e){}});charts={};
+  const sg=document.getElementById('summaryGrid');sg.innerHTML='';
+  sg.appendChild(buildBarCard('📋 Jobs by Client',data,j=>j.manager||'Unknown','#3b82f6'));
+  sg.appendChild(buildBarCard('🔧 Jobs by Type',data,j=>j.type||'Unknown','#8b5cf6'));
+  const dCounts={};
+  data.forEach(j=>(j.drivers||[]).forEach(did=>{if(!did)return;const d=drivers.find(dr=>dr.id===did);if(d)dCounts[d.name]=(dCounts[d.name]||0)+1;}));
+  sg.appendChild(buildRawBarCard('👷 Driver Assignments',dCounts,'#22c55e'));
+  sg.appendChild(buildDonut(data));sg.appendChild(buildTrend(data));
+  const vCounts={};
+  data.forEach(j=>(j.vehicles||[]).forEach(vid=>{if(!vid)return;const v=vehicles.find(vv=>vv.id===vid);if(v)vCounts[v.name]=(vCounts[v.name]||0)+1;}));
+  sg.appendChild(buildRawBarCard('🚛 Vehicle Utilization',vCounts,'#f97316'));
+}
+function buildBarCard(title,data,keyFn,color){
+  const counts={};data.forEach(j=>{const k=keyFn(j);counts[k]=(counts[k]||0)+1;});
+  return buildRawBarCard(title,counts,color);
+}
+function buildRawBarCard(title,counts,color){
+  const card=document.createElement('div');card.className='s-card';
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const max=sorted.length?sorted[0][1]:1;
+  if(!sorted.length){card.innerHTML=`<h3>${title}</h3><p style="font-size:12px;color:var(--muted);">No data yet.</p>`;return card;}
+  card.innerHTML=`<h3>${title}</h3>`+sorted.map(([k,v])=>`
+    <div class="stat-row"><span style="font-size:11px;min-width:80px;">${k}</span>
+      <div class="stat-bar-wrap"><div class="stat-bar" style="width:${Math.round(v/max*100)}%;background:${color};"></div></div>
+      <span class="stat-count">${v}</span></div>`).join('');
+  return card;
+}
+function buildDonut(data){
+  const card=document.createElement('div');card.className='s-card';
+  const cid='ch_d_'+Date.now();
+  card.innerHTML=`<h3>🎯 Status Breakdown</h3><div class="chart-container"><canvas id="${cid}"></canvas></div>`;
+  setTimeout(()=>{
+    const counts={};STATUSES.forEach(s=>counts[s.k]=0);
+    data.forEach(j=>counts[j.status||'received']=(counts[j.status||'received']||0)+1);
+    const ctx=document.getElementById(cid);if(!ctx)return;
+    charts[cid]=new Chart(ctx,{type:'doughnut',data:{labels:STATUSES.map(s=>s.label),datasets:[{data:STATUSES.map(s=>counts[s.k]),
+      backgroundColor:['#fefce8','#f5f3ff','#eff6ff','#fff7ed','#f0fdf4','#fef2f2'],
+      borderColor:['#ca8a04','#7c3aed','#2563eb','#ea580c','#16a34a','#dc2626'],borderWidth:2}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}}});
+  },80);return card;
+}
+function buildTrend(data){
+  const card=document.createElement('div');card.className='s-card';
+  const cid='ch_t_'+Date.now();
+  card.innerHTML=`<h3>📈 Jobs by Month</h3><div class="chart-container"><canvas id="${cid}"></canvas></div>`;
+  setTimeout(()=>{
+    const mc={};data.forEach(j=>{const ym=j.day.slice(0,7);mc[ym]=(mc[ym]||0)+1;});
+    const sorted=Object.entries(mc).sort((a,b)=>a[0].localeCompare(b[0]));
+    const ctx=document.getElementById(cid);if(!ctx||!sorted.length)return;
+    charts[cid]=new Chart(ctx,{type:'bar',data:{
+      labels:sorted.map(([ym])=>{const[y,m]=ym.split('-');return MONTHS[parseInt(m)-1].slice(0,3)+' '+y;}),
+      datasets:[{label:'Jobs',data:sorted.map(([,v])=>v),backgroundColor:'#6366f1',borderRadius:5}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
+  },80);return card;
+}
+
+// ══════════════════════════════════════════════════
+// BACKDROP CLOSE
+// ══════════════════════════════════════════════════
+['jobModal','statusModal','driverPickModal','vehiclePickModal','driversModal','clientsModal','vehiclesModal','connModal'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
+});
+</script>
+</body>
+</html>
